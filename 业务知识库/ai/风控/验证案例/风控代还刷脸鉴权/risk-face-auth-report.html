@@ -1,0 +1,369 @@
+<!--
+  [INPUT]: golden-flow-business-solution 页面流程确认稿 + 设计方案确认稿 + visual-evidence.json
+  [OUTPUT]: 风控代还刷脸鉴权方案报告 HTML
+  [POS]: 本轮风控代还分支方案的报告投影，说明流程、边界、设计验收与知识库复用依据
+  [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>风控代还刷脸鉴权 - 知识库方案报告</title>
+  <style>
+    :root {
+      --brand: #4d83ff;
+      --text: #1e2533;
+      --sub: #787c85;
+      --muted: #a4a8ac;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --line: #ededee;
+      --warn-bg: #fff7e8;
+      --ok-bg: #eef7f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    main { width: min(1120px, calc(100% - 32px)); margin: 24px auto 48px; }
+    header, section {
+      margin-bottom: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--card);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 24px; line-height: 26px; }
+    h2 { margin-bottom: 12px; font-size: 18px; line-height: 20px; }
+    h3 { margin: 18px 0 10px; font-size: 16px; line-height: 18px; }
+    p, li { color: var(--sub); font-size: 14px; line-height: 16px; }
+    a { color: var(--brand); text-decoration: none; }
+    .summary { margin-bottom: 12px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 2px;
+      background: #edf3ff;
+      color: var(--brand);
+      font-size: 12px;
+      line-height: 14px;
+      font-weight: 700;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .metric {
+      min-height: 92px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fbfcff;
+    }
+    .metric b {
+      display: block;
+      color: var(--brand);
+      font-size: 22px;
+      line-height: 24px;
+      font-family: Roboto, "PingFang SC", sans-serif;
+    }
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 14px;
+    }
+    .quick-path {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .path-node {
+      position: relative;
+      min-height: 78px;
+      padding: 10px;
+      border: 1px solid #dbe6ff;
+      border-radius: 4px;
+      background: #f7faff;
+      font-size: 12px;
+      line-height: 14px;
+    }
+    .path-node::after {
+      position: absolute;
+      top: 34px;
+      right: -8px;
+      width: 8px;
+      height: 1px;
+      background: var(--brand);
+      content: "";
+    }
+    .path-node:last-child::after { display: none; }
+    .path-node strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .path-node span { color: var(--sub); }
+    .rows { display: grid; gap: 8px; }
+    .row {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fbfcff;
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .row strong { color: var(--text); }
+    .row span { color: var(--sub); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .step {
+      min-height: 72px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fbfcff;
+      font-size: 12px;
+      line-height: 14px;
+    }
+    .step strong { display: block; margin-bottom: 4px; color: var(--brand); font-size: 14px; line-height: 16px; }
+    .flowchart { display: flex; gap: 28px; align-items: flex-start; overflow-x: auto; margin-top: 14px; padding: 12px 4px 4px; }
+    .flow-node {
+      position: relative;
+      flex: 0 0 170px;
+      min-height: 92px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fbfcff;
+      font-size: 12px;
+      line-height: 14px;
+    }
+    .flow-node::after {
+      position: absolute;
+      top: 38px;
+      right: -24px;
+      width: 20px;
+      height: 1px;
+      background: var(--brand);
+      content: "";
+    }
+    .flow-node:last-child::after { display: none; }
+    .flow-node strong { display: block; margin-bottom: 6px; color: var(--brand); font-size: 14px; line-height: 16px; }
+    .flow-node span { display: block; color: var(--sub); }
+    .evidence-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 12px; }
+    .evidence-card { border: 1px solid var(--line); border-radius: 4px; background: var(--card); overflow: visible; }
+    .evidence-card img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--line); }
+    .evidence-copy { padding: 10px; font-size: 12px; line-height: 14px; }
+    .evidence-copy strong { display: block; margin-bottom: 6px; font-size: 14px; line-height: 16px; }
+    .callout { margin-top: 12px; padding: 10px; border-radius: 4px; background: var(--ok-bg); color: #177245; font-size: 13px; line-height: 15px; }
+    .warning { background: var(--warn-bg); color: #9a5b00; }
+    @media (max-width: 720px) {
+      main { width: min(100% - 20px, 480px); }
+      .row { grid-template-columns: 1fr; }
+      .hero-grid, .quick-path { grid-template-columns: 1fr; }
+      .path-node::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>风控代还刷脸鉴权</h1>
+      <p class="summary">在代还分支中新增还款人本人刷脸鉴权。鉴权通过前不展示欠款人账单信息；通过后回到已有账单选择页，由还款人选择对应还款笔数。</p>
+      <div class="tags">
+        <span class="tag">设计方案已确认</span>
+        <span class="tag">知识库：golden-flow-business-kb</span>
+        <span class="tag">证据完整展示</span>
+        <span class="tag"><a href="risk-face-auth-canvas.html">打开方案画布</a></span>
+      </div>
+      <div class="hero-grid">
+        <div class="metric"><b>4</b><span>页面/状态：确认刷脸、人脸识别、加载中、账单选择</span></div>
+        <div class="metric"><b>1</b><span>核心信息闸门：刷脸成功前不展示欠款信息</span></div>
+        <div class="metric"><b>10+</b><span>相似页面检索：刷脸、加载、账单选择全量比对</span></div>
+        <div class="metric"><b>2</b><span>最终复用证据：刷脸鉴权视觉参考、我的账单页</span></div>
+      </div>
+    </header>
+
+    <section id="executive-summary">
+      <h2>00 汇报结论</h2>
+      <div class="rows">
+        <div class="row"><strong>方案判断</strong><span>代还链路需要先验证还款人本人身份，再开放欠款账单查看和还款选择；本次只处理信息披露前置鉴权分支。</span></div>
+        <div class="row"><strong>知识库命中</strong><span>命中用信流程的刷脸鉴权样例、支付还款流程的账单承接页，以及多类授信/用信加载态候选。</span></div>
+        <div class="row"><strong>最终输出</strong><span>报告页用于说明方案依据；横向画布用于查看 375px 页面、候选证据和搜索台账。</span></div>
+      </div>
+      <div class="quick-path">
+        <div class="path-node"><strong>需求输入</strong><span>风控代还刷脸鉴权</span></div>
+        <div class="path-node"><strong>知识检索</strong><span>业务 AI 文档 + visual-evidence</span></div>
+        <div class="path-node"><strong>证据比对</strong><span>刷脸、加载、账单候选页</span></div>
+        <div class="path-node"><strong>方案生成</strong><span>4 个页面/状态</span></div>
+        <div class="path-node"><strong>设计自检</strong><span>P Designer + 审查规则</span></div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <h2>01 项目概览</h2>
+      <div class="rows">
+        <div class="row"><strong>业务场景</strong><span>还款人与欠款人不同的代还流程，需要先验证还款人本人身份，再开放欠款账单查看与还款选择。</span></div>
+        <div class="row"><strong>核心结论</strong><span>主流程为“确认刷脸页 -> 人脸识别组件页 -> 刷脸结果加载中 -> 已有账单选择页”。</span></div>
+        <div class="row"><strong>信息闸门</strong><span>刷脸成功前不展示欠款人姓名、欠款金额、账单笔数和账单明细。</span></div>
+      </div>
+      <div class="callout">本报告是已确认方案的投影；页面流程和设计方向已在前两阶段确认。</div>
+    </section>
+
+    <section id="goals">
+      <h2>02 产品目标与边界</h2>
+      <div class="rows">
+        <div class="row"><strong>产品目标</strong><span>保障代还链路中欠款信息披露安全，确保只有完成身份验证的还款人才能查看并选择可代还账单。</span></div>
+        <div class="row"><strong>用户角色</strong><span>还款人，即代还的人；欠款人是账单信息所属人，本次刷脸主体锁定为还款人。</span></div>
+        <div class="row"><strong>范围边界</strong><span>只新增刷脸鉴权分支，完整还款主流程、收银台和还款结果页保持原链路。</span></div>
+        <div class="row"><strong>合规约束</strong><span>未鉴权前不得展示欠款信息；失败文案不暴露风控策略与命中原因。</span></div>
+      </div>
+    </section>
+
+    <section id="confirmation">
+      <h2>03 需求确认记录</h2>
+      <div class="rows">
+        <div class="row"><strong>已确认</strong><span>刷脸采用独立页面承接；流程包含确认刷脸、人脸识别组件、加载中和回到账单选择页。</span></div>
+        <div class="row"><strong>已修正</strong><span>第一个页面不展示账单，也不选择还款笔数；鉴权成功后才进入已有账单选择页。</span></div>
+        <div class="row"><strong>成功路径</strong><span>还款人点击确认刷脸，完成人脸识别，加载确认结果，成功后进入已有多笔账单选择页面。</span></div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <h2>04 方案流程</h2>
+      <p>这条分支的本质是信息披露前置鉴权：身份没有被证明之前，账单信息不进入还款人的视野。</p>
+      <h3>页面流程确认稿</h3>
+      <div class="rows">
+        <div class="row"><strong>放置位置</strong><span>代还入口之后、已有账单选择页之前。</span></div>
+        <div class="row"><strong>页面数量</strong><span>4 个页面/状态。</span></div>
+        <div class="row"><strong>回流路径</strong><span>刷脸成功后回到已有账单选择页，继续原还款主流程。</span></div>
+      </div>
+      <div class="flow">
+        <div class="step"><strong>1 确认刷脸页</strong>说明需验证还款人本人身份。</div>
+        <div class="step"><strong>2 人脸识别组件页</strong>进入真实刷脸采集。</div>
+        <div class="step"><strong>3 刷脸结果加载中</strong>等待后端确认鉴权结果。</div>
+        <div class="step"><strong>4 已有账单选择页</strong>展示多笔账单并选择还款笔数。</div>
+      </div>
+      <h3>流程图</h3>
+      <div class="flowchart">
+        <div class="flow-node"><strong>代还入口</strong><span>还款人进入</span></div>
+        <div class="flow-node"><strong>确认刷脸</strong><span>不展示账单</span></div>
+        <div class="flow-node"><strong>人脸识别</strong><span>采集本人信息</span></div>
+        <div class="flow-node"><strong>加载确认</strong><span>等待鉴权结果</span></div>
+        <div class="flow-node"><strong>账单选择</strong><span>成功后展示账单</span></div>
+      </div>
+    </section>
+
+    <section id="design">
+      <h2>05 设计方案与验收</h2>
+      <div class="rows">
+        <div class="row"><strong>确认刷脸页</strong><span>标题“请完成本人刷脸验证”；说明“为保障还款安全，查看并代还账单前需先验证还款人身份”；主按钮“确认刷脸”。</span></div>
+        <div class="row"><strong>人脸识别组件页</strong><span>深色摄像头采集态；标题“刷脸认证”；取景框提示“请将正脸置于取景框内”；弱提示“保持光线充足，根据页面提示完成眨眼、点头等动作”。</span></div>
+        <div class="row"><strong>加载中页</strong><span>复用加载页的圆环倒计时表达，中心显示“15s”；主文案“正在为你确认身份信息”；说明“验证结果确认中，请勿关闭页面或重复操作”。</span></div>
+        <div class="row"><strong>账单选择页</strong><span>复用已有账单选择页，鉴权成功后再拉取欠款人的多笔账单和可还金额。</span></div>
+        <div class="row"><strong>验收口径</strong><span>鉴权成功前页面与接口不展示欠款信息；成功后回流稳定；失败和超时只给重试/返回，不暴露策略。</span></div>
+      </div>
+    </section>
+
+    <section id="kb-reuse">
+      <h2>06 知识库复用依据</h2>
+      <div class="rows">
+        <div class="row"><strong>最终复用</strong><span>已有账单选择页复用支付还款流程；刷脸视觉参考用信流程的交易鉴权-刷脸验证。</span></div>
+        <div class="row"><strong>新增设计</strong><span>确认刷脸独立页、刷脸结果加载中为本方案新增；知识库暂无完全一致的代还刷脸分支。</span></div>
+        <div class="row"><strong>候选不混用</strong><span>交易密码鉴权、收银台、还款结果页仅作为相邻候选，不进入最终流程。</span></div>
+      </div>
+      <div class="callout warning">业务知识库不读取原始 source；本报告只使用 AI 文档与 visual-evidence 证据。</div>
+      <h3>复用资料全量搜索台账</h3>
+      <p>每个流程节点都展示搜索词、搜索范围、命中结果、降级原因和最终判断；最终复用很少时，也不省略全量搜索过程。</p>
+      <div class="rows">
+        <div class="row"><strong>确认刷脸页</strong><span>搜索词：刷脸、刷脸认证、人脸识别、身份验证。命中交易鉴权-刷脸验证、消金授信-刷脸、普惠授信-刷脸；验密/短信与刷脸语义不同，已剔除。</span></div>
+        <div class="row"><strong>人脸识别组件页</strong><span>搜索词：刷脸中、人脸识别、活体、认证。命中消金授信-刷脸中、普惠授信-刷脸中、墨西哥/印尼授信-人脸识别；复用真实刷脸采集类证据。</span></div>
+        <div class="row"><strong>加载中页</strong><span>搜索词：加载、加载页、审核中、处理中。命中消金授信-加载页、普惠授信-加载页、授信审核中、用信审核中；还款状态已剔除，因为不是刷脸结果加载。</span></div>
+        <div class="row"><strong>账单选择页</strong><span>搜索词：账单选择、我的账单、待还账单、多笔账单、选择还款、代还。命中我的账单、待还账单、还款计划、部分还弹窗、拆单还等 20+ 条；直接复用已有账单选择页。</span></div>
+      </div>
+      <h3>逐节点类似页面比对</h3>
+      <p>每个节点都按“类似页面：页面 / 页面 / 页面”展开，避免只展示最终采用页。</p>
+      <h3>1. 确认刷脸页</h3>
+      <p>类似页面：交易鉴权-刷脸验证 / 消金授信-刷脸 / 普惠授信-刷脸</p>
+      <div class="evidence-grid">
+        <div class="evidence-card"><img alt="交易鉴权-刷脸验证" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_xj_yxlc/transcripts/assets/figma-101-4826-14-5.2%E3%80%81%E4%BA%A4%E6%98%93%E9%89%B4%E6%9D%83-%E5%88%B7%E8%84%B8%E9%AA%8C%E8%AF%81.png"><div class="evidence-copy"><strong>交易鉴权-刷脸验证</strong>模式参考：刷脸说明与去验证动作；本方案改成代还前独立页。</div></div>
+        <div class="evidence-card"><img alt="消金授信-刷脸" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_xj_sxlc/transcripts/assets/figma-479-12047-02-3%E3%80%81%E5%88%B7%E8%84%B8.png"><div class="evidence-copy"><strong>消金授信-刷脸</strong>刷脸前置页候选，授信场景不同。</div></div>
+        <div class="evidence-card"><img alt="普惠授信-刷脸" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_ph_sx/transcripts/assets/figma-2-4160-08-5.%E5%88%B7%E8%84%B8.png"><div class="evidence-copy"><strong>普惠授信-刷脸</strong>刷脸验证入口补充候选。</div></div>
+      </div>
+      <h3>2. 人脸识别组件页</h3>
+      <p>类似页面：消金授信-刷脸中 / 普惠授信-刷脸中 / 墨西哥授信-人脸识别 / 印尼授信-人脸识别</p>
+      <div class="evidence-grid">
+        <div class="evidence-card"><img alt="消金授信-刷脸中" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_xj_sxlc/transcripts/assets/figma-479-12002-03-4%E3%80%81%E5%88%B7%E8%84%B8%E4%B8%AD.png"><div class="evidence-copy"><strong>消金授信-刷脸中</strong>真实刷脸中状态，主参考。</div></div>
+        <div class="evidence-card"><img alt="普惠授信-刷脸中" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_ph_sx/transcripts/assets/figma-2-5941-10-%E5%88%B7%E8%84%B8%E4%B8%AD.png"><div class="evidence-copy"><strong>普惠授信-刷脸中</strong>刷脸采集过程补充参考。</div></div>
+        <div class="evidence-card"><img alt="墨西哥授信-人脸识别" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_hw_mx_sx/transcripts/assets/figma-1-3520-05-%E6%8E%88%E4%BF%A1-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.png"><div class="evidence-copy"><strong>墨西哥授信-人脸识别</strong>人脸识别候选，场景不同。</div></div>
+        <div class="evidence-card"><img alt="印尼授信-人脸识别" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_hw_yn_sx/transcripts/assets/figma-1-3520-06-%E6%8E%88%E4%BF%A1-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB.png"><div class="evidence-copy"><strong>印尼授信-人脸识别</strong>人脸识别补充候选，海外授信场景。</div></div>
+      </div>
+      <h3>3. 刷脸结果加载中</h3>
+      <p>类似页面：消金授信-加载页 / 普惠授信-加载页 / 授信审核中 / 用信审核中</p>
+      <div class="evidence-grid">
+        <div class="evidence-card"><img alt="消金授信-加载页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_xj_sxlc/transcripts/assets/figma-479-12063-04-5%E3%80%81%E5%8A%A0%E8%BD%BD%E9%A1%B5.png"><div class="evidence-copy"><strong>消金授信-加载页</strong>明确加载页，主参考。</div></div>
+        <div class="evidence-card"><img alt="普惠授信-加载页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_ph_sx/transcripts/assets/figma-2-6791-01-6.%E5%8A%A0%E8%BD%BD%E9%A1%B5.png"><div class="evidence-copy"><strong>普惠授信-加载页</strong>加载等待补充参考。</div></div>
+        <div class="evidence-card"><img alt="授信审核中" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_hw_mx_sx/transcripts/assets/figma-16-3095-01-7%E3%80%81%E6%8E%88%E4%BF%A1%E5%AE%A1%E6%A0%B8%E4%B8%AD.png"><div class="evidence-copy"><strong>授信审核中</strong>等待系统结果，降级候选。</div></div>
+      </div>
+      <h3>4. 已有账单选择页</h3>
+      <p>类似页面：我的账单页 / 待还账单页 / 拆单还页面 / 选择还款渠道</p>
+      <div class="evidence-grid">
+        <div class="evidence-card"><img alt="我的账单页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_zfhk_hklc/transcripts/assets/figma-28-3974-13-2%E3%80%81%E6%88%91%E7%9A%84%E8%B4%A6%E5%8D%95%E9%A1%B5.png"><div class="evidence-copy"><strong>我的账单页</strong>成功回流主参考。</div></div>
+        <div class="evidence-card"><img alt="待还账单页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_zfhk_hklc/transcripts/assets/figma-28-4553-11-3%E3%80%81%E5%BE%85%E8%BF%98%E8%B4%A6%E5%8D%95%E9%A1%B5.png"><div class="evidence-copy"><strong>待还账单页</strong>多笔账单高置信候选。</div></div>
+        <div class="evidence-card"><img alt="拆单还页面" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_zfhk_hklc/transcripts/assets/figma-6-1790-03-3%E3%80%81%E6%8B%86%E5%8D%95%E8%BF%98%E9%A1%B5%E9%9D%A2.png"><div class="evidence-copy"><strong>拆单还页面</strong>多笔拆分还款候选。</div></div>
+      </div>
+      <h3>落入最终流程的复用页面</h3>
+      <div class="evidence-grid">
+        <div class="evidence-card">
+          <img alt="交易鉴权-刷脸验证" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_xj_yxlc/transcripts/assets/figma-101-4826-14-5.2%E3%80%81%E4%BA%A4%E6%98%93%E9%89%B4%E6%9D%83-%E5%88%B7%E8%84%B8%E9%AA%8C%E8%AF%81.png">
+          <div class="evidence-copy"><strong>刷脸鉴权视觉参考</strong>复用“刷脸认证、光线提示、去验证”表达模式。<br><a href="https://www.figma.com/design/Xefssa3TNEu7Z1STDtXZKa/%E7%94%A8%E4%BF%A1%E6%B5%81%E7%A8%8B?node-id=101-4826&t=U59k5q7AScaxqgXu-1">Figma 节点</a></div>
+        </div>
+        <div class="evidence-card">
+          <img alt="我的账单页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_zfhk_hklc/transcripts/assets/figma-28-3974-13-2%E3%80%81%E6%88%91%E7%9A%84%E8%B4%A6%E5%8D%95%E9%A1%B5.png">
+          <div class="evidence-copy"><strong>成功回流：我的账单页</strong>鉴权成功后可进入已有账单承接。<br><a href="https://www.figma.com/design/0FAzKI7gZTbXJx5cli2xYT/%E3%80%90%E9%BB%84%E9%87%91%E6%B5%81%E7%A8%8B%E3%80%91%E6%94%AF%E4%BB%98%E8%BF%98%E6%AC%BE?node-id=28-3974&t=UQF3o4GMElS9pVpn-4">Figma 节点</a></div>
+        </div>
+      </div>
+      <h3>同类候选池</h3>
+      <p>候选页面用于二次选择，最终复用以“落入最终流程的复用页面”为准。每张图保留完整页面比例展示。</p>
+      <div class="evidence-grid">
+        <div class="evidence-card">
+          <img alt="待还账单页" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_zfhk_hklc/transcripts/assets/figma-28-4553-11-3%E3%80%81%E5%BE%85%E8%BF%98%E8%B4%A6%E5%8D%95%E9%A1%B5.png">
+          <div class="evidence-copy"><strong>待还账单页</strong>同属账单选择候选，可按现有 Figma 实际入口决定采用。</div>
+        </div>
+        <div class="evidence-card">
+          <img alt="交易密码鉴权" src="https://golden-flow-kb-assets-1303999254.cos.ap-guangzhou.myqcloud.com/workspaces/ws_biz_qd62_fk_hjb/transcripts/assets/figma-1169-9529-02-2%E3%80%81%E4%BA%A4%E6%98%93%E9%89%B4%E6%9D%83.png">
+          <div class="evidence-copy"><strong>交易密码鉴权</strong>只作为鉴权插入点候选，不进入本次刷脸主流程。</div>
+        </div>
+      </div>
+      <h3>复用与新增边界</h3>
+      <div class="rows">
+        <div class="row"><strong>直接复用</strong><span>已有账单选择页。</span></div>
+        <div class="row"><strong>复用模式</strong><span>刷脸组件页参考交易鉴权-刷脸验证的信息组织。</span></div>
+        <div class="row"><strong>新增设计</strong><span>确认刷脸页与刷脸结果加载中。</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
