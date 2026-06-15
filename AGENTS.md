@@ -5,7 +5,7 @@
 ## 可用 Skills
 
 - **biz-solution** — 设计方案产出总览（指向 biz-p1 ~ biz-p4）
-- **biz-p1** — P1 需求理解：Slot A-D + KB 预检
+- **biz-p1** — P1 需求理解：Slot A-D + 知识库预检
 - **biz-p2** — P2 页面清单：Slot E-F + 流程同构
 - **biz-p3** — P3 逐页设计：Slot G（工作台 Tab）
 - **biz-p4** — P4 整体评审：Slot summary + H + I-summary
@@ -25,9 +25,9 @@
 
 ## 注意事项
 
-1. KB 文档按 manifest `sectionSchema` 分章节读取，不要一次读全文
+1. 知识库文档按 manifest `sectionSchema` 分章节读取，不要一次读全文
 2. Slot I 分为 I-gallery（工作台 Tab，追加）+ I-summary（汇报 Tab，定稿），永远不要替换 I-gallery 全部内容
 3. `slot-summary` 是 P4 填充的决策摘要，KV 表格格式，位于汇报 Tab 第一屏
-4. 每条设计内容标注来源：KB / 跨域参考 / 推理
+4. 每条设计内容标注来源：知识库 / 跨域参考 / 推理
 5. 设计尺寸 iOS 375 x 812 pt
 6. 工作台 Tab 的 slot-g 推荐 matrix 布局（每页一列）

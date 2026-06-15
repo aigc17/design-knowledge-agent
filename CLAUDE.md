@@ -32,13 +32,13 @@ claude
 
 | Tab | 受众 | 内容 |
 |-----|------|------|
-| 汇报 | 领导 | 决策摘要(结论先行) + 项目概览(A-D) + 设计规划(E-F) + 验证(H) + 命中与采用(I-summary) |
+| 汇报 | 领导 | 项目概览(A-C) + 设计规划(E-F) + 验证(H) + 命中与采用(I-summary) + 决策摘要(末尾) |
 | 工作台 | 设计师 | 无限画布(pan/zoom) + 页面设计稿(G, matrix布局) + 跨域参考候选池(I-gallery) |
 
 ## 工作流：/biz-solution
 
 ```
-P1 需求理解 → Slot A-D + KB 预检                [汇报 Tab]
+P1 需求理解 → Slot A-D + 知识库预检                [汇报 Tab]
 P2 页面清单 → Slot E-F + 流程同构分析            [汇报 Tab]
 P3 逐页设计 → Slot G（375x812 iOS 设计稿）       [工作台 Tab]
 P4 整体评审 → Slot summary + H + I-summary       [汇报 Tab]
@@ -48,9 +48,9 @@ P4 整体评审 → Slot summary + H + I-summary       [汇报 Tab]
 
 ## 来源标注
 
-- KB — 精确命中知识文档
+- 知识库 — 精确命中知识文档
 - 跨域参考 — 跨业务域的相似页面截图/模式
-- 推理 — KB 无覆盖，Agent 独立推理
+- 推理 — 知识库无覆盖，Agent 独立推理
 
 ## 知识文档结构（统一 6 章）
 
@@ -71,10 +71,11 @@ P4 整体评审 → Slot summary + H + I-summary       [汇报 Tab]
 ## AI 开发注意事项
 
 1. Slot I 分为 `I-gallery`（工作台 Tab，追加区）+ `I-summary`（汇报 Tab，定稿区），永远不要用 Edit 替换 I-gallery 全部内容
-2. `slot-summary` 是 P4 填充的决策摘要，KV 表格格式，位于汇报 Tab 第一屏
+2. `slot-summary` 是 P4 填充的决策摘要，KV 表格格式，位于汇报 Tab 末尾
 3. Edit HTML 时用 `id="slot-X"` 作为定位锚点，不要用通用闭合标签
-4. KB 文档按 `sectionSchema` 分章节读取，不要一次读全文
+4. 知识库文档按 `sectionSchema` 分章节读取，不要一次读全文
 5. `.biz-session.json` 是运行时状态，不入库，HTML 是 source of truth
 6. 工作台 Tab 的 slot-g 推荐 matrix 布局（每页一列：node-card → phone-frame → evidence-shot）
+7. `output/` 下的模板产出 HTML 豁免 800 行限制 — 这是填槽生成的报告文件，行数由槽位内容决定，非手写业务代码
 
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

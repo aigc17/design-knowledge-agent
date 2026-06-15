@@ -16,14 +16,14 @@ P3 阶段：填充 Slot G（375×812 iOS 设计稿）。
 
 读取 `.biz-session.json`，获取 `inventory[]`、`crossRefs[]`（含 adopted 标记）、`reportFile`。
 
-### 2. 读取 KB 章节
+### 2. 读取知识库章节
 
 按 `sectionSchema.P3` 读命中文档的「四、流程与页面识别总表」中对应页面的视觉描述和交互规则。
 
 ### 3. 对 inventory 中所有页面一次性设计
 
 每页流程：
-1. 读 KB 中该页的视觉描述、交互规则
+1. 读知识库中该页的视觉描述、交互规则
 2. 检查 `crossRefs[]` 中 `adopted: true` 的条目，引用截图 URL 作参考
 3. 生成 iOS 375×812 pt UI（phone-frame 容器）
 4. 附设计说明 + 来源标注（📗/📘/🔮）

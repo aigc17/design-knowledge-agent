@@ -17,7 +17,7 @@
 拆为 4 个独立 Skill，用户依次调用：
 
 ```
-$biz-p1 {需求描述}    → Slot A-D（需求理解 + KB 预检）       [汇报 Tab]
+$biz-p1 {需求描述}    → Slot A-D（需求理解 + 知识库预检）       [汇报 Tab]
 $biz-p2               → Slot E-F（页面清单 + 流程同构）       [汇报 Tab]
 $biz-p3               → Slot G（逐页设计 375x812）            [工作台 Tab]
 $biz-p4               → Slot summary + H + I-summary（评审）  [汇报 Tab]
@@ -28,9 +28,9 @@ $biz-p4               → Slot summary + H + I-summary（评审）  [汇报 Tab]
 ## 共享规则
 
 ### 来源标注
-- **KB** = 精确命中文档（标注文档+章节）
+- **知识库** = 精确命中文档（标注文档+章节）
 - **跨域参考** = 跨域相似页面（标注来源+截图链接）
-- **推理** = KB 无覆盖，Agent 推理
+- **推理** = 知识库无覆盖，Agent 推理
 
 ### 槽位操作
 - 定位 `id="slot-X"` → 替换 placeholder
