@@ -260,23 +260,15 @@
     <nav class="report-nav">
       <div class="nav-label">方案目录</div>
       <div class="nav-list">
-        <a class="nav-link" href="#sec-summary">决策摘要</a>
         <a class="nav-link" href="#sec-overview">01 项目概览</a>
         <a class="nav-link" href="#sec-plan">02 设计规划</a>
         <a class="nav-link" href="#sec-verify">03 设计验证</a>
         <a class="nav-link" href="#sec-evidence">04 命中与采用</a>
+        <a class="nav-link" href="#sec-summary">决策摘要</a>
       </div>
     </nav>
 
     <main class="report-main">
-
-      <!-- 决策摘要（结论先行） -->
-      <div class="report-section" id="sec-summary">
-        <div class="slot" id="slot-summary">
-          <h3>决策摘要</h3>
-          <div class="placeholder">待填充：P4 阶段自动生成</div>
-        </div>
-      </div>
 
       <!-- 01 项目概览 -->
       <div class="report-section" id="sec-overview">
@@ -298,7 +290,7 @@
           <div class="placeholder">待填充</div>
         </div>
 
-        <div class="slot" id="slot-d">
+        <div class="slot" id="slot-d" style="display:none;">
           <h3>关键指标</h3>
           <div class="placeholder">待填充</div>
         </div>
@@ -350,6 +342,14 @@
           <h3>设计依据汇总</h3>
           <p style="font-size:13px;color:var(--sub);margin-bottom:12px;">本方案中每项设计决策的信息来源与推理过程。</p>
           <div class="placeholder">待填充</div>
+        </div>
+      </div>
+
+      <!-- 决策摘要（末尾） -->
+      <div class="report-section" id="sec-summary">
+        <div class="slot" id="slot-summary">
+          <h3>决策摘要</h3>
+          <div class="placeholder">待填充：P4 阶段自动生成</div>
         </div>
       </div>
 

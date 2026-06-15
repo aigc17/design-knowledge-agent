@@ -8,7 +8,7 @@
 模板包含两个视图，切换通过顶部 Tab：
 
 **Tab 1「汇报」**（给领导看的干净版）：
-- 决策摘要（slot-summary，P4 填充，结论先行）
+- 决策摘要（slot-summary，P4 填充，末尾）
 - 01 项目概览（slot-a ~ slot-d）
 - 02 设计规划（slot-e + slot-f + 跳转工作台按钮）
 - 03 设计验证（slot-h + slot-gap-check）
@@ -192,10 +192,10 @@ $ARGUMENTS
 
 **读取**：重新读取命中文档的业务规则、异常路径
 
-**填充 Slot summary** — 决策摘要（结论先行，位于汇报 Tab 最顶部）：
+**填充 Slot summary** — 决策摘要（位于汇报 Tab 末尾）：
 - 定位 `id="slot-summary"`，替换 placeholder
 - 用 KV 表格呈现：本轮结论 / 核心理由 / 复用边界 / 最终产物
-- 位于汇报 Tab 末尾（04 命中与采用之后、footer 之前）
+- 位于 04 命中与采用之后、footer 之前
 
 **填充 Slot H** — 四维度自检：
 - 流程完整性（主链路 + 异常覆盖）

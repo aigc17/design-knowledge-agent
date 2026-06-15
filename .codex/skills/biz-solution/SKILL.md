@@ -34,7 +34,7 @@ $biz-p4               → Slot summary + H + I-summary（评审）  [汇报 Tab]
 
 ### 槽位操作
 - 定位 `id="slot-X"` → 替换 placeholder
-- **slot-summary** = P4 填充决策摘要（KV 表格，汇报 Tab 第一屏）
+- **slot-summary** = P4 填充决策摘要（KV 表格，汇报 Tab 末尾）
 - **I-gallery**（`id="slot-i-gallery"`）= 只追加不替换（工作台 Tab）
 - **I-summary**（`id="slot-i-summary"`）= P4 定稿时写入（汇报 Tab）
 

@@ -63,7 +63,7 @@ alwaysApply: false
 
 ### P4 整体评审 → Slot summary + H + I-summary（汇报 Tab）
 
-- summary 决策摘要（KV 表格，结论先行）
+- summary 决策摘要（KV 表格，末尾）
 - H 四维自检（流程完整 / 规则一致 / UI 合规 / 信息不足）
 - I-summary 定稿（知识库/跨域/推理 汇总 + 知识库建议 + 矛盾检测）
 - **暂停**：请用户最终确认
