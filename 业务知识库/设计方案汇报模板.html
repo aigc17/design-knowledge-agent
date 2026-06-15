@@ -8,12 +8,10 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #fafbfc; --surface: #fff; --border: #e5e7eb; --border-l: #f0f1f3;
-    --text: #1a1a2e; --muted: #6b7280;
-    --accent: #2563eb; --accent2: #7c3aed; --green: #059669; --orange: #d97706; --red: #dc2626;
+    --text: #1a1a2e; --muted: #6b7280; --accent: #2563eb; --green: #059669;
     --radius: 12px;
-    --p1: #2563eb; --p2: #7c3aed; --p3: #059669; --p4: #db2777; --auto: #6b7280;
   }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; -webkit-font-smoothing: antialiased; }
   .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
 
   /* ---- Header ---- */
@@ -23,19 +21,18 @@
   .report-meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.6); }
   .report-meta span { display: flex; align-items: center; gap: 6px; }
 
-  /* ---- Slot ---- */
-  .slot { background: var(--surface); border: 2px dashed var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; position: relative; }
-  .slot.filled { border-style: solid; }
-  .slot-badge { position: absolute; top: -1px; padding: 4px 12px; border-radius: 0 0 8px 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: #fff; }
-  .slot-badge.right { right: 24px; }
-  .slot-badge.left { left: 24px; }
-  .badge-pending { background: var(--muted); }
-  .badge-filled { background: var(--green); }
-  .slot h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-  .slot .slot-desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  /* ---- Section ---- */
+  section { padding: 48px 0 0; }
+  .section-num { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+  .section-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .section-desc { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+  .section-divider { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 32px; }
+
+  /* ---- Slot (工程层：AI 填充锚点，展示层不可见) ---- */
+  .slot { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px; }
+  .slot h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
   .placeholder { background: #f8f9fb; border: 1px dashed var(--border); border-radius: 8px; padding: 20px 24px; color: var(--muted); font-size: 14px; font-style: italic; text-align: center; }
-  section { padding: 40px 0 0; }
-  .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+  /* 填充后 placeholder 被替换，slot 看起来像普通内容卡片 */
 
   /* ---- Tables ---- */
   .info-table { width: 100%; border-collapse: collapse; }
@@ -46,19 +43,8 @@
   .content-item { padding: 10px 0; border-bottom: 1px solid var(--border-l); font-size: 14px; }
   .content-item:last-child { border-bottom: none; }
 
-  /* ---- Source tags ---- */
-  .source-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; font-weight: 600; margin-right: 4px; }
-  .tag-kb { background: #e0f2fe; color: #0369a1; }
-  .tag-cross { background: #ede9fe; color: #6d28d9; }
-  .tag-infer { background: #fef3c7; color: #92400e; }
-
-  /* ---- Mapping panel ---- */
-  .mapping-panel { background: #f0f4ff; border: 1px solid #d4e0ff; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px; }
-  .mapping-panel h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
-  .mapping-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #d4e0ff; font-size: 13px; }
-  .mapping-row:last-child { border-bottom: none; }
-  .mapping-phase { padding: 3px 10px; border-radius: 6px; font-weight: 600; font-size: 11px; color: #fff; flex-shrink: 0; min-width: 36px; text-align: center; }
-  .legend { display: flex; gap: 20px; flex-wrap: wrap; padding: 16px 20px; background: #f8f9fb; border-radius: 8px; margin-bottom: 32px; font-size: 12px; }
+  /* ---- Source footnote (降级展示，不抢视觉) ---- */
+  .source-note { font-size: 11px; color: #9ca3af; margin-top: 4px; }
 
   /* ---- Flow nodes ---- */
   .flow-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
@@ -72,22 +58,18 @@
   .check-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
   .check-item p { font-size: 14px; }
 
-  /* ---- Gap alert ---- */
-  .gap-alert { background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
-  .gap-alert h4 { font-size: 13px; font-weight: 600; color: #92400E; margin-bottom: 4px; }
-  .gap-alert p { font-size: 13px; color: #78350F; }
+  /* ---- Pending items (替代 KB Gap) ---- */
+  .pending-item { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 16px; margin: 8px 0; }
+  .pending-item h4 { font-size: 13px; font-weight: 600; color: #92400E; margin-bottom: 4px; }
+  .pending-item p { font-size: 13px; color: #78350F; }
 
-  /* ---- Crossref cards (Slot I gallery) ---- */
-  .crossref-card { display: flex; gap: 12px; padding: 14px 16px; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; margin-bottom: 8px; align-items: flex-start; }
-  .crossref-card img { width: 48px; height: 104px; object-fit: cover; border-radius: 6px; border: 1px solid #e9d5ff; flex-shrink: 0; }
-  .crossref-card h4 { font-size: 13px; font-weight: 600; color: #6d28d9; margin-bottom: 2px; }
-  .crossref-card p { font-size: 12px; color: var(--muted); }
+  /* ---- Reference cards (附录) ---- */
+  .ref-card { display: flex; gap: 12px; padding: 14px 16px; background: #f8f9fb; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; align-items: flex-start; }
+  .ref-card img { width: 48px; height: 104px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0; }
+  .ref-card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .ref-card p { font-size: 12px; color: var(--muted); }
 
-  /* ---- KB hit card ---- */
-  .kb-hit { display: flex; gap: 12px; padding: 14px 16px; background: #f8f9fb; border-radius: 8px; margin-bottom: 8px; }
-  .kb-hit-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; font-weight: 700; }
-
-  /* ---- Phone mockup (P3) ---- */
+  /* ---- Phone mockup ---- */
   .phone-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin: 24px 0; }
   .phone-wrap { display: flex; flex-direction: column; align-items: center; }
   .phone-label { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
@@ -95,9 +77,12 @@
   .phone-frame { width: 280px; border: 2px solid #1a1a2e; border-radius: 32px; overflow: hidden; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
   .phone-screen { width: 100%; aspect-ratio: 375/812; overflow: hidden; position: relative; font-family: -apple-system, 'PingFang SC', sans-serif; }
 
-  .page-card-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .page-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
   .tag-new { background: rgba(37,99,235,0.1); color: var(--accent); }
   .tag-reuse { background: rgba(5,150,105,0.1); color: var(--green); }
+
+  /* ---- Appendix ---- */
+  .appendix-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
 
   footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
 </style>
@@ -105,185 +90,157 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- HEADER — 动态区：标题、副标题、业务域、日期、状态、KB 命中 -->
+<!-- HEADER -->
 <!-- ============================================================ -->
 <header class="report-header">
   <div class="container">
     <h1 id="report-title"><!-- SLOT:TITLE -->设计方案标题<!-- /SLOT:TITLE --></h1>
     <div class="subtitle" id="report-subtitle"><!-- SLOT:SUBTITLE -->一句话描述<!-- /SLOT:SUBTITLE --></div>
     <div class="report-meta">
-      <span id="meta-domain">业务域：—</span>
-      <span id="meta-date">日期：—</span>
-      <span id="meta-status">状态：P0 未开始</span>
-      <span id="meta-kb">KB 命中：—</span>
+      <span id="meta-domain">业务域：--</span>
+      <span id="meta-date">日期：--</span>
+      <span id="meta-owner">负责人：--</span>
     </div>
   </div>
 </header>
 
 <!-- ============================================================ -->
-<!-- MAPPING — 槽位 x 阶段映射面板 -->
+<!-- 一、需求背景 -->
 <!-- ============================================================ -->
 <section>
   <div class="container">
-    <div class="mapping-panel">
-      <h3>以终为始：模板槽位 &times; 工作流节点映射</h3>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">每个板块是一块"乐高"，由对应的工作流节点产出。全部填满 = 方案完成。</p>
-      <div class="mapping-row" id="map-p1"><span class="mapping-phase" style="background:var(--p1);">P1</span><span style="color:var(--muted);">&rarr;</span><span>Slot A-D 待填充</span></div>
-      <div class="mapping-row" id="map-p2"><span class="mapping-phase" style="background:var(--p2);">P2</span><span style="color:var(--muted);">&rarr;</span><span>Slot E-F 待填充</span></div>
-      <div class="mapping-row" id="map-p3"><span class="mapping-phase" style="background:var(--p3);">P3</span><span style="color:var(--muted);">&rarr;</span><span>Slot G 待填充</span></div>
-      <div class="mapping-row" id="map-p4"><span class="mapping-phase" style="background:var(--p4);">P4</span><span style="color:var(--muted);">&rarr;</span><span>Slot H 待填充</span></div>
-      <div class="mapping-row" id="map-auto"><span class="mapping-phase" style="background:var(--auto);">Auto</span><span style="color:var(--muted);">&rarr;</span><span>Slot I 待填充</span></div>
-    </div>
-    <div class="legend">
-      <div style="display:flex; align-items:center; gap:6px;"><span class="source-tag tag-kb">📗 KB</span> 精确命中文档</div>
-      <div style="display:flex; align-items:center; gap:6px;"><span class="source-tag tag-cross">📘 跨域</span> 跨域相似参考</div>
-      <div style="display:flex; align-items:center; gap:6px;"><span class="source-tag tag-infer">🔮 推理</span> Agent 设计推理</div>
-    </div>
-  </div>
-</section>
+    <div class="section-num">01</div>
+    <div class="section-title">需求背景</div>
+    <div class="section-divider"></div>
 
-<!-- ============================================================ -->
-<!-- PART 1 · P1 产出 — Slot A / B / C / D -->
-<!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-label">Part 1 &middot; 需求认知 &mdash; P1 产出</div>
-
+    <!-- slot-a: 需求背景 -->
     <div class="slot" id="slot-a">
-      <div class="slot-badge right" style="background:var(--p1);">P1</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>A &middot; 需求背景</h2>
-      <p class="slot-desc">项目发起的原因、业务痛点</p>
-      <div class="placeholder">P1 阶段填充</div>
+      <h3>项目背景与业务痛点</h3>
+      <div class="placeholder">待填充</div>
     </div>
 
+    <!-- slot-b: 产品目标 -->
     <div class="slot" id="slot-b">
-      <div class="slot-badge right" style="background:var(--p1);">P1</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>B &middot; 产品目标</h2>
-      <p class="slot-desc">这次设计要达成什么业务目标</p>
-      <div class="placeholder">P1 阶段填充</div>
+      <h3>产品目标</h3>
+      <div class="placeholder">待填充</div>
     </div>
+  </div>
+</section>
 
+<!-- ============================================================ -->
+<!-- 二、用户与指标 -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">02</div>
+    <div class="section-title">用户与指标</div>
+    <div class="section-divider"></div>
+
+    <!-- slot-c: 目标用户 -->
     <div class="slot" id="slot-c">
-      <div class="slot-badge right" style="background:var(--p1);">P1</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>C &middot; 目标用户</h2>
-      <p class="slot-desc">这次设计服务的用户群体特征</p>
-      <div class="placeholder">P1 阶段填充</div>
+      <h3>目标用户</h3>
+      <div class="placeholder">待填充</div>
     </div>
 
+    <!-- slot-d: 关键指标 -->
     <div class="slot" id="slot-d">
-      <div class="slot-badge right" style="background:var(--p1);">P1</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>D &middot; 关键指标</h2>
-      <p class="slot-desc">方案上线后需要关注的数据指标</p>
-      <div class="placeholder">P1 阶段填充</div>
-    </div>
-
-    <!-- KB Gap Pre-check (P1 末尾，填充后显示) -->
-    <div class="slot" id="slot-gap-check" style="display:none;">
-      <div class="slot-badge right" style="background:var(--orange);">预检</div>
-      <div class="slot-badge left badge-filled">已扫描</div>
-      <h2>KB 覆盖度预检</h2>
-      <p class="slot-desc">需求涉及的关键决策点 vs KB 是否有答案</p>
-      <div class="placeholder">P1 末尾自动扫描</div>
+      <h3>关键指标</h3>
+      <div class="placeholder">待填充</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- PART 2 · P2 产出 — Slot E / F -->
+<!-- 三、设计规划 -->
 <!-- ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-label">Part 2 &middot; 设计规划 &mdash; P2 产出</div>
+    <div class="section-num">03</div>
+    <div class="section-title">设计规划</div>
+    <div class="section-divider"></div>
 
+    <!-- slot-e: 设计流程 -->
     <div class="slot" id="slot-e">
-      <div class="slot-badge right" style="background:var(--p2);">P2</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>E &middot; 设计流程</h2>
-      <p class="slot-desc">主链路 + 分支/异常路径 + 流程同构分析</p>
-      <div class="placeholder">P2 阶段填充</div>
+      <h3>设计流程</h3>
+      <div class="placeholder">待填充</div>
     </div>
 
+    <!-- slot-f: 页面清单 -->
     <div class="slot" id="slot-f">
-      <div class="slot-badge right" style="background:var(--p2);">P2</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>F &middot; 页面清单</h2>
-      <p class="slot-desc">页面名称、类型、参考来源、状态</p>
-      <div class="placeholder">P2 阶段填充</div>
+      <h3>页面清单</h3>
+      <div class="placeholder">待填充</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- PART 3 · P3 产出 — Slot G -->
+<!-- 四、设计方案 -->
 <!-- ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-label">Part 3 &middot; 设计方案 &mdash; P3 产出</div>
+    <div class="section-num">04</div>
+    <div class="section-title">设计方案</div>
+    <div class="section-divider"></div>
 
+    <!-- slot-g: 设计稿 -->
     <div class="slot" id="slot-g">
-      <div class="slot-badge right" style="background:var(--p3);">P3</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>G &middot; 设计方案</h2>
-      <p class="slot-desc">375&times;812 iOS 设计稿</p>
-      <div class="placeholder">P3 阶段填充</div>
+      <h3>页面设计</h3>
+      <div class="placeholder">待填充</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- PART 4 · P4 产出 — Slot H -->
+<!-- 五、设计验证 -->
 <!-- ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-label">Part 4 &middot; 设计验证 &mdash; P4 产出</div>
+    <div class="section-num">05</div>
+    <div class="section-title">设计验证</div>
+    <div class="section-divider"></div>
 
+    <!-- slot-h: 自检 -->
     <div class="slot" id="slot-h">
-      <div class="slot-badge right" style="background:var(--p4);">P4</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>H &middot; 设计自检</h2>
-      <p class="slot-desc">四维度评审</p>
-      <div class="placeholder">P4 阶段填充</div>
+      <h3>设计自检</h3>
+      <div class="placeholder">待填充</div>
+    </div>
+
+    <!-- slot-gap-check: 待确认事项（有内容时显示） -->
+    <div class="slot" id="slot-gap-check" style="display:none;">
+      <h3>待确认事项</h3>
+      <div class="placeholder">待填充</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- 附录 · Slot I — 拆为两个独立子区                            -->
-<!--   I-gallery: 跨域参考截图画廊（P1 写入，后续只追加不替换）  -->
-<!--   I-summary: 证据汇总表（P4 定稿时写入）                    -->
+<!-- 附录 -->
 <!-- ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-label">附录 &middot; 知识库命中证据</div>
+    <div class="section-num">附录</div>
+    <div class="section-title">设计依据与参考</div>
+    <div class="section-divider"></div>
 
-    <!-- I-gallery: append-only, never replace -->
+    <!-- slot-i-gallery: 同类参考（追加区，不可覆盖） -->
     <div class="slot" id="slot-i-gallery">
-      <div class="slot-badge right" style="background:var(--auto);">Auto &middot; 追加</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>I-1 &middot; 跨域参考截图画廊</h2>
-      <p class="slot-desc">跨域相似页面的截图 + 模式说明（每阶段追加，不可覆盖）</p>
-      <div class="placeholder">P1 阶段开始追加</div>
+      <h3>同类页面参考</h3>
+      <p class="section-desc" style="margin-bottom:12px;">来自其他业务线的相似页面，作为本次设计的参考依据。</p>
+      <div class="placeholder">待填充</div>
     </div>
 
-    <!-- I-summary: written once in P4 -->
+    <!-- slot-i-summary: 证据汇总（P4 定稿） -->
     <div class="slot" id="slot-i-summary">
-      <div class="slot-badge right" style="background:var(--p4);">P4 &middot; 定稿</div>
-      <div class="slot-badge left badge-pending">待填充</div>
-      <h2>I-2 &middot; 证据汇总表</h2>
-      <p class="slot-desc">📗 精确命中 + 📘 跨域参考 + 🔮 纯推理 全量汇总</p>
-      <div class="placeholder">P4 阶段定稿</div>
+      <h3>设计依据汇总</h3>
+      <p class="section-desc" style="margin-bottom:12px;">本方案中每项设计决策的信息来源与推理过程。</p>
+      <div class="placeholder">待填充</div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <p>设计方案 &middot; 9+1 槽位 &times; 4 阶段</p>
-    <p style="margin-top:4px;">业务知识库驱动 &middot; Claude Code Skill</p>
+    <p>设计方案汇报</p>
   </div>
 </footer>
 
