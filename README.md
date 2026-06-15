@@ -4,20 +4,20 @@
 
 ## 这是什么
 
-设计师输入一句需求描述，AI 自动完成 4 个阶段，产出一份带完整来源追溯的设计方案 HTML：
+设计师输入一句需求描述，AI 自动完成 4 个阶段，产出一份带完整来源追溯的设计方案 HTML（双 Tab：汇报视图 + 工作台视图）：
 
 ```
 /biz-solution 还借宝新增退款确认页
 ```
 
 ```
-P1 需求理解 → 背景 / 目标 / 用户 / 指标（+ KB 覆盖度预检）
-P2 页面清单 → 设计流程 / 页面清单 / 流程同构分析
-P3 逐页设计 → 375×812 iOS 设计稿
-P4 整体评审 → 四维自检 + 知识库证据汇总
+P1 需求理解 → 背景 / 目标 / 用户 / 指标（+ KB 覆盖度预检）     [汇报 Tab]
+P2 页面清单 → 设计流程 / 页面清单 / 流程同构分析                 [汇报 Tab]
+P3 逐页设计 → 375x812 iOS 设计稿（无限画布 + matrix 布局）      [工作台 Tab]
+P4 整体评审 → 决策摘要 + 四维自检 + 知识库证据汇总               [汇报 Tab]
 ```
 
-每条设计决策标注来源：📗 知识库精确命中 / 📘 跨域相似参考 / 🔮 AI 推理。
+每条设计决策标注来源：知识库精确命中 / 跨域相似参考 / AI 推理。
 
 ## 快速开始
 
@@ -120,8 +120,9 @@ git push
   biz-review.md                设计方案评审
   biz-analyze.md               需求拆解分析
 
-.codex/skills/biz-solution/    Codex CLI Skill
-  SKILL.md                     同工作流，Codex 格式
+.codex/skills/                 Codex CLI Skill（4 阶段拆分）
+  biz-solution/SKILL.md        总览
+  biz-p1/ ~ biz-p4/            4 个独立阶段 Skill
 
 .cursor/rules/                 Cursor Rules
   biz-solution.mdc             同工作流，被动规则格式
@@ -131,9 +132,10 @@ AGENTS.md                      Codex CLI 项目指令
 
 业务知识库/
   manifest.json                知识路由索引
-  设计方案汇报模板.html         9+1 槽位 HTML 模板
-  ai/                          知识文档（6 域 × 18 篇）
+  设计方案汇报模板.html         双 Tab HTML 模板（汇报 + 工作台）
+  ai/                          知识文档（6 域 x 18 篇）
   output/                      运行时输出（不入库）
+  examples/                    验证案例（物理隔离）
 ```
 
 ## 工作原理

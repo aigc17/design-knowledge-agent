@@ -4,7 +4,7 @@
 > 业务知识库 Skill 入口层 — 三个场景化 Skill，共享 manifest.json 知识路由
 
 ## 成员清单
-- `biz-solution.md`: 设计方案产出 v2，模板驱动 + Slot I 双区隔离 + KB 预检 + 按章节读取，四阶段（P1→P4）
+- `biz-solution.md`: 设计方案产出 v3，双 Tab 模板驱动 + Slot I 双区隔离 + slot-summary 决策摘要 + KB 预检 + 按章节读取，四阶段（P1→P4）
 - `biz-review.md`: 设计方案评审，对照知识库业务规则/异常路径/经验沉淀进行一致性检查
 - `biz-analyze.md`: 需求拆解分析，定位业务域、梳理关联流程、盘点可复用资产、拆解设计任务
 
@@ -21,7 +21,7 @@
 ## 共享协议
 - 知识路由：三个 Skill 均先读 `业务知识库/manifest.json` 匹配文档
 - 产出约束：iOS 375×812 pt，Pencil MCP 生成 .pen 设计文件
-- 汇报模板：`设计方案汇报模板.html`（9 槽位 × 4 阶段映射）
+- 汇报模板：`设计方案汇报模板.html`（双 Tab：汇报 + 工作台，10+1 槽位）
 - 状态持久化：`.biz-session.json`（仅 /biz-solution 使用）
 
 **⚠️ 自指声明**：一旦本文件夹新增/删除/修改 Skill 或职责变动，请立即更新本文档。

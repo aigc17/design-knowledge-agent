@@ -1,7 +1,23 @@
-# /biz-solution — 设计方案产出 v2
+# /biz-solution — 设计方案产出 v3
 
 > 基于业务知识库，产出一份可交付的设计方案汇报。
-> 最终产物 = `设计方案汇报模板.html` 的 9+1 个槽位被逐步填满。
+> 最终产物 = `设计方案汇报模板.html` 的 10+1 个槽位被逐步填满。
+
+## 模板结构（双 Tab）
+
+模板包含两个视图，切换通过顶部 Tab：
+
+**Tab 1「汇报」**（给领导看的干净版）：
+- 决策摘要（slot-summary，P4 填充，结论先行）
+- 01 项目概览（slot-a ~ slot-d）
+- 02 设计规划（slot-e + slot-f + 跳转工作台按钮）
+- 03 设计验证（slot-h + slot-gap-check）
+- 04 命中与采用（slot-i-summary）
+
+**Tab 2「工作台」**（给设计师看的工作版）：
+- 无限画布（pan/zoom）
+- slot-g：页面设计稿（matrix 或 phone-grid 布局）
+- slot-i-gallery：跨域参考截图（候选池，追加区）
 
 ## 需求输入
 
@@ -13,9 +29,10 @@ $ARGUMENTS
 
 1. **读取路由索引** — `业务知识库/manifest.json`
 2. **读取汇报模板** — `业务知识库/设计方案汇报模板.html`
-   - 理解 9+1 个槽位：A-D (P1)、E-F (P2)、G (P3)、H (P4)、I-gallery + I-summary (附录)
-   - **Slot I-gallery = 追加区**（跨域截图画廊，每阶段只追加不替换）
-   - **Slot I-summary = 定稿区**（P4 最终写入证据汇总表）
+   - 双 Tab 结构：「汇报」Tab（A-D, E-F, H, summary, I-summary）+「工作台」Tab（G, I-gallery）
+   - **slot-summary = 决策摘要**（P4 填充，KV 表格：结论/理由/复用边界/产物）
+   - **Slot I-gallery = 追加区**（工作台 Tab 中，每阶段只追加不替换）
+   - **Slot I-summary = 定稿区**（汇报 Tab 中，P4 一次性写入）
 3. **检查会话状态** — `业务知识库/.biz-session.json`
    - 存在 → 读取，从 `phase` 继续
    - 不存在且有需求 → 新建会话，进入 P1
@@ -152,12 +169,14 @@ $ARGUMENTS
 3. 生成 iOS 375×812 pt UI（phone-frame 容器）
 4. 附设计说明 + 来源标注
 
-**填充 Slot G**：
-- 手机框展示所有页面设计稿
+**填充 Slot G**（位于「工作台」Tab）：
+- 推荐用 matrix 布局：每页一列（node-card → phone-frame → evidence-shot），并排对比
+- 也可用 phone-grid 平铺展示
 - 每页附设计决策说明（📗/📘/🔮）
 
-**I-gallery 追加**：
+**I-gallery 追加**（位于「工作台」Tab）：
 - 设计过程中新引用的跨域截图追加到 I-gallery
+- 推荐用 candidate-board 暗色面板分组展示
 
 **产出**：更新 HTML（A-G 已填充）。
 
@@ -168,9 +187,14 @@ $ARGUMENTS
 
 ---
 
-## P4 · 整体评审 → Slot H + I-summary 定稿
+## P4 · 整体评审 → Slot H + summary + I-summary 定稿
 
 **读取**：重新读取命中文档的业务规则、异常路径
+
+**填充 Slot summary** — 决策摘要（结论先行，位于汇报 Tab 最顶部）：
+- 定位 `id="slot-summary"`，替换 placeholder
+- 用 KV 表格呈现：本轮结论 / 核心理由 / 复用边界 / 最终产物
+- 让领导第一屏就看到结论，不用翻到最后
 
 **填充 Slot H** — 四维度自检：
 - 流程完整性（主链路 + 异常覆盖）
@@ -201,10 +225,11 @@ $ARGUMENTS
 | 约束 | 规格 |
 |------|------|
 | 最终产物 | `业务知识库/output/{简称}-report.html` |
-| 模板来源 | `业务知识库/设计方案汇报模板.html`（复制后填充） |
+| 模板来源 | `业务知识库/设计方案汇报模板.html`（双 Tab：汇报+工作台） |
 | 设计尺寸 | iOS 375 × 812 pt |
 | 来源标注 | 📗 KB / 📘 跨域参考 / 🔮 推理 |
-| Slot I | gallery(追加) + summary(定稿) 双区隔离 |
+| Slot I | gallery(工作台Tab追加) + summary(汇报Tab定稿) 双区隔离 |
+| Slot summary | 决策摘要，P4 填充，KV 表格，汇报 Tab 第一屏 |
 
 ## 会话状态
 

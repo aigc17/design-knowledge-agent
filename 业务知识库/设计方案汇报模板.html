@@ -5,244 +5,460 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><!-- SLOT:TITLE -->设计方案<!-- /SLOT:TITLE --></title>
 <style>
+  /* ---- Reset & Tokens ---- */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #fafbfc; --surface: #fff; --border: #e5e7eb; --border-l: #f0f1f3;
-    --text: #1a1a2e; --muted: #6b7280; --accent: #2563eb; --green: #059669;
-    --radius: 12px;
+    --bg: #f5f7fa; --surface: #fff; --border: #e5e7eb; --border-l: #f0f1f3;
+    --text: #1e2533; --sub: #6b7280; --muted: #9ca3af;
+    --accent: #2563eb; --accent-soft: #eff6ff;
+    --green: #059669; --green-soft: #ecfdf5;
+    --warn: #d97706; --warn-soft: #fffbeb;
+    --dark: #111827; --radius: 8px; --topbar-h: 56px;
   }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
 
-  /* ---- Header ---- */
-  .report-header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: #fff; padding: 64px 0 48px; }
-  .report-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-  .report-header .subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 24px; }
-  .report-meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.6); }
-  .report-meta span { display: flex; align-items: center; gap: 6px; }
+  /* ---- Top Bar ---- */
+  .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; height: var(--topbar-h); padding: 0 24px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.96); backdrop-filter: blur(8px); }
+  .topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .topbar-left h1 { font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
+  .topbar-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 8px; background: #f3f4f6; }
+  .tab-btn { height: 32px; padding: 0 16px; border: none; border-radius: 6px; background: transparent; color: var(--sub); font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .tab-btn.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .topbar-meta { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+
+  /* ---- Tab Panels ---- */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ======== Tab 1: Report ======== */
+  .report-layout { display: grid; grid-template-columns: 192px minmax(0, 1fr); min-height: calc(100vh - var(--topbar-h)); }
+  .report-nav { position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow: auto; padding: 20px 12px; border-right: 1px solid var(--border); background: var(--surface); }
+  .nav-label { font-size: 10px; font-weight: 800; letter-spacing: .1em; color: var(--muted); margin-bottom: 8px; }
+  .nav-list { display: flex; flex-direction: column; gap: 2px; }
+  .nav-link { display: block; padding: 7px 10px; border-radius: 4px; color: var(--sub); font-size: 13px; }
+  .nav-link:hover { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .report-main { padding: 28px 40px 64px; max-width: 860px; }
 
   /* ---- Section ---- */
-  section { padding: 48px 0 0; }
-  .section-num { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
-  .section-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-  .section-desc { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-  .section-divider { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 32px; }
+  .section-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+  .section-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+  .report-section { margin-bottom: 44px; scroll-margin-top: calc(var(--topbar-h) + 16px); }
 
-  /* ---- Slot (工程层：AI 填充锚点，展示层不可见) ---- */
-  .slot { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px; }
-  .slot h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
-  .placeholder { background: #f8f9fb; border: 1px dashed var(--border); border-radius: 8px; padding: 20px 24px; color: var(--muted); font-size: 14px; font-style: italic; text-align: center; }
-  /* 填充后 placeholder 被替换，slot 看起来像普通内容卡片 */
+  /* ---- Slot ---- */
+  .slot { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 26px; margin-bottom: 14px; }
+  .slot h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .placeholder { background: #f8f9fb; border: 1px dashed var(--border); border-radius: 6px; padding: 16px 20px; color: var(--muted); font-size: 13px; font-style: italic; text-align: center; }
+
+  /* ---- KV (summary table) ---- */
+  .kv { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--border); }
+  .kv-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); background: var(--surface); }
+  .kv-row strong { padding: 10px 14px; background: #f8f9fb; font-size: 13px; font-weight: 600; color: var(--sub); }
+  .kv-row span { padding: 10px 14px; font-size: 14px; line-height: 1.6; }
+
+  /* ---- Metric Grid ---- */
+  .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+  .metric { padding: 14px; border: 1px solid var(--border); border-radius: var(--radius); background: #fbfcff; }
+  .metric b { display: block; color: var(--accent); font-size: 26px; line-height: 1.2; }
+  .metric span { display: block; margin-top: 6px; color: var(--sub); font-size: 12px; }
 
   /* ---- Tables ---- */
   .info-table { width: 100%; border-collapse: collapse; }
-  .info-table th { text-align: left; padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--muted); background: #f8f9fb; border-bottom: 1px solid var(--border); }
-  .info-table td { padding: 10px 14px; font-size: 14px; border-bottom: 1px solid var(--border-l); }
+  .info-table th { text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 600; color: var(--muted); background: #f8f9fb; border-bottom: 1px solid var(--border); }
+  .info-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border-l); }
+  .ledger { width: 100%; border-collapse: collapse; border: 1px solid var(--border); font-size: 13px; }
+  .ledger th, .ledger td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .ledger th { background: #f8f9fb; color: var(--muted); font-weight: 700; font-size: 12px; }
 
-  /* ---- Content items ---- */
-  .content-item { padding: 10px 0; border-bottom: 1px solid var(--border-l); font-size: 14px; }
+  /* ---- Content Items ---- */
+  .content-item { padding: 8px 0; border-bottom: 1px solid var(--border-l); font-size: 14px; }
   .content-item:last-child { border-bottom: none; }
+  .source-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-  /* ---- Source footnote (降级展示，不抢视觉) ---- */
-  .source-note { font-size: 11px; color: #9ca3af; margin-top: 4px; }
-
-  /* ---- Flow nodes ---- */
-  .flow-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
-  .flow-node { padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #fff; }
+  /* ---- Flow Nodes (Report) ---- */
+  .flow-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 14px 0; }
+  .flow-node { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; color: #fff; }
   .flow-node.new { background: var(--accent); }
   .flow-node.reuse { background: var(--green); }
   .flow-arrow { color: var(--muted); font-size: 18px; }
 
-  /* ---- Check items ---- */
-  .check-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border-l); }
+  /* ---- Check Items ---- */
+  .check-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border-l); }
   .check-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
   .check-item p { font-size: 14px; }
 
-  /* ---- Pending items (替代 KB Gap) ---- */
-  .pending-item { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 16px; margin: 8px 0; }
+  /* ---- Pending / Gap ---- */
+  .pending-item { background: var(--warn-soft); border: 1px solid #FDE68A; border-radius: 6px; padding: 12px 14px; margin: 8px 0; }
   .pending-item h4 { font-size: 13px; font-weight: 600; color: #92400E; margin-bottom: 4px; }
   .pending-item p { font-size: 13px; color: #78350F; }
 
-  /* ---- Reference cards (附录) ---- */
-  .ref-card { display: flex; gap: 12px; padding: 14px 16px; background: #f8f9fb; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; align-items: flex-start; }
-  .ref-card img { width: 48px; height: 104px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0; }
-  .ref-card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-  .ref-card p { font-size: 12px; color: var(--muted); }
+  /* ---- Callout ---- */
+  .callout { padding: 12px 14px; border-radius: 6px; background: var(--green-soft); color: #065f46; font-size: 13px; line-height: 1.5; margin-bottom: 14px; }
+  .callout.warn { background: var(--warn-soft); color: #92400e; }
 
-  /* ---- Phone mockup ---- */
+  /* ---- Status / Tag ---- */
+  .status { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+  .status.ok { background: var(--green-soft); color: var(--green); }
+  .status.warn { background: var(--warn-soft); color: var(--warn); }
+  .page-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag-new { background: rgba(37,99,235,.1); color: var(--accent); }
+  .tag-reuse { background: rgba(5,150,105,.1); color: var(--green); }
+
+  /* ---- Evidence Grid (Report) ---- */
+  .evidence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .evidence-card { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .evidence-head { padding: 10px 12px; border-bottom: 1px solid var(--border); background: #f8f9fb; }
+  .evidence-head strong { display: block; font-size: 13px; margin-top: 4px; }
+  .evidence-card img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; background: #f8f9fb; cursor: zoom-in; }
+  .evidence-copy { padding: 10px 12px; font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+  /* ---- Reference Cards ---- */
+  .ref-card { display: flex; gap: 12px; padding: 12px 14px; background: #f8f9fb; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; align-items: flex-start; }
+  .ref-card img { width: 48px; height: 104px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0; }
+  .ref-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .ref-card p { font-size: 12px; color: var(--sub); }
+
+  /* ---- Workspace Link (Report -> Tab 2) ---- */
+  .workspace-link { margin-top: 14px; padding: 14px 16px; border: 1px dashed #dbe5ff; border-radius: var(--radius); background: #fafcff; display: flex; align-items: center; justify-content: space-between; }
+  .workspace-link span { font-size: 13px; color: var(--sub); }
+  .ws-btn { height: 34px; padding: 0 18px; border: none; border-radius: 6px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ---- Phone Mockup ---- */
   .phone-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin: 24px 0; }
   .phone-wrap { display: flex; flex-direction: column; align-items: center; }
-  .phone-label { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-  .phone-sublabel { font-size: 12px; color: var(--muted); margin-bottom: 12px; text-align: center; }
-  .phone-frame { width: 280px; border: 2px solid #1a1a2e; border-radius: 32px; overflow: hidden; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .phone-label { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .phone-sublabel { font-size: 12px; color: var(--sub); margin-bottom: 10px; text-align: center; }
+  .phone-frame { width: 280px; border: 2px solid #1a1a2e; border-radius: 32px; overflow: hidden; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
   .phone-screen { width: 100%; aspect-ratio: 375/812; overflow: hidden; position: relative; font-family: -apple-system, 'PingFang SC', sans-serif; }
 
-  .page-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-  .tag-new { background: rgba(37,99,235,0.1); color: var(--accent); }
-  .tag-reuse { background: rgba(5,150,105,0.1); color: var(--green); }
+  /* ======== Tab 2: Workspace ======== */
+  .workspace { height: calc(100vh - var(--topbar-h)); display: flex; }
+  .stage { position: relative; flex: 1; overflow: hidden; background: var(--bg); background-image: radial-gradient(#d1d5db 1px, transparent 1px); background-size: 24px 24px; }
+  .stage.space-ready { cursor: grab; }
+  .stage.dragging { cursor: grabbing; user-select: none; }
+  .canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; transition: transform 75ms ease-out; }
+  .canvas-inner { padding: 60px; display: flex; flex-direction: column; gap: 60px; min-width: 800px; }
+  .canvas img { max-width: 100%; }
 
-  /* ---- Appendix ---- */
-  .appendix-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  /* ---- Matrix (per-page columns) ---- */
+  .matrix { display: flex; align-items: flex-start; gap: 48px; }
+  .flow-column { width: 375px; flex: 0 0 375px; display: flex; flex-direction: column; align-items: center; }
+  .node-card { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .node-card strong { color: var(--accent); font-size: 16px; margin-bottom: 6px; display: block; }
+  .node-card p { margin: 0; color: var(--sub); font-size: 13px; line-height: 1.5; }
+  .down-arrow { width: 1px; height: 48px; background: #d1d5db; position: relative; margin: 6px 0; }
+  .down-arrow::after { content: ""; position: absolute; bottom: -4px; left: -4px; width: 8px; height: 8px; border-right: 2px solid #d1d5db; border-bottom: 2px solid #d1d5db; transform: rotate(45deg); }
 
-  footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  /* ---- Evidence Shot (Workspace) ---- */
+  .evidence-shot { width: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.04); margin-top: 8px; }
+  .evidence-title { padding: 10px 14px; border-bottom: 1px solid var(--border); background: #f8f9fb; font-size: 13px; font-weight: 700; }
+  .evidence-shot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+  .evidence-note { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); font-size: 13px; margin-top: 8px; }
+  .evidence-note div { display: flex; gap: 10px; margin-bottom: 8px; }
+  .evidence-note div:last-child { margin-bottom: 0; }
+  .evidence-note span:first-child { width: 56px; flex: 0 0 56px; color: var(--sub); font-size: 12px; }
+  .evidence-note p { margin: 0; font-size: 13px; line-height: 1.5; }
+
+  /* ---- Candidate Board (Workspace, dark) ---- */
+  .candidate-board { width: 100%; min-width: 1200px; padding: 28px; border: 1px solid #334155; border-radius: var(--radius); background: linear-gradient(rgba(148,163,184,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.12) 1px, transparent 1px), var(--dark); background-size: 48px 48px; color: #fff; }
+  .candidate-board h2 { margin: 0 0 8px; font-size: 22px; }
+  .candidate-board > p { max-width: 800px; margin: 0 0 24px; color: #94a3b8; font-size: 13px; line-height: 1.6; }
+  .candidate-group { margin-top: 24px; }
+  .candidate-group h3 { margin: 0 0 6px; font-size: 17px; }
+  .candidate-group > p { margin: 0 0 12px; color: #94a3b8; font-size: 13px; }
+  .candidate-row { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .candidate-card { width: 300px; flex: 0 0 300px; overflow: hidden; border: 1px solid #334155; border-radius: 6px; background: var(--surface); color: var(--text); }
+  .candidate-card img { display: block; width: 100%; height: auto; background: #f8f9fb; cursor: zoom-in; }
+  .candidate-copy { padding: 12px; border-top: 1px solid var(--border); }
+  .candidate-copy strong { display: block; margin-bottom: 6px; font-size: 14px; }
+  .candidate-copy p { margin: 0 0 8px; color: var(--sub); font-size: 12px; line-height: 1.5; }
+
+  /* ---- Zoom Panel (Workspace) ---- */
+  .zoom-panel { position: absolute; right: 20px; bottom: 20px; z-index: 30; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .zoom-toolbar { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .zoom-toolbar button { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); cursor: pointer; font-size: 14px; }
+  .zoom-toolbar strong { min-width: 42px; text-align: center; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  .zoom-help { padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,.72); color: var(--muted); font-size: 11px; font-weight: 600; pointer-events: none; }
+
+  /* ---- Image Preview ---- */
+  .image-preview { position: fixed; inset: 0; z-index: 200; display: none; place-items: center; padding: 32px; background: rgba(18,24,38,.8); }
+  .image-preview.active { display: grid; }
+  .image-preview img { max-width: min(92vw, 1000px); max-height: 86vh; object-fit: contain; border-radius: 4px; background: #fff; box-shadow: 0 18px 60px rgba(0,0,0,.28); }
+  .image-preview button { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.36); border-radius: 18px; background: rgba(255,255,255,.94); font-size: 18px; cursor: pointer; }
+
+  footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+  @media (max-width: 900px) {
+    .report-layout { grid-template-columns: 1fr; }
+    .report-nav { display: none; }
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .evidence-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
 
 <!-- ============================================================ -->
-<!-- HEADER -->
+<!-- TOP BAR -->
 <!-- ============================================================ -->
-<header class="report-header">
-  <div class="container">
+<header class="topbar">
+  <div class="topbar-left">
     <h1 id="report-title"><!-- SLOT:TITLE -->设计方案标题<!-- /SLOT:TITLE --></h1>
-    <div class="subtitle" id="report-subtitle"><!-- SLOT:SUBTITLE -->一句话描述<!-- /SLOT:SUBTITLE --></div>
-    <div class="report-meta">
-      <span id="meta-domain">业务域：--</span>
-      <span id="meta-date">日期：--</span>
-      <span id="meta-owner">负责人：--</span>
-    </div>
+  </div>
+  <div class="topbar-tabs">
+    <button class="tab-btn active" data-tab="report">汇报</button>
+    <button class="tab-btn" data-tab="workspace">工作台</button>
+  </div>
+  <div class="topbar-meta">
+    <span id="meta-domain">业务域：--</span>
+    <span id="meta-date">日期：--</span>
+    <span id="meta-owner">负责人：--</span>
   </div>
 </header>
 
 <!-- ============================================================ -->
-<!-- 一、需求背景 -->
+<!-- TAB 1: 汇报 -->
 <!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">01</div>
-    <div class="section-title">需求背景</div>
-    <div class="section-divider"></div>
+<div id="tab-report" class="tab-panel active">
+  <div class="report-layout">
+    <nav class="report-nav">
+      <div class="nav-label">方案目录</div>
+      <div class="nav-list">
+        <a class="nav-link" href="#sec-summary">决策摘要</a>
+        <a class="nav-link" href="#sec-overview">01 项目概览</a>
+        <a class="nav-link" href="#sec-plan">02 设计规划</a>
+        <a class="nav-link" href="#sec-verify">03 设计验证</a>
+        <a class="nav-link" href="#sec-evidence">04 命中与采用</a>
+      </div>
+    </nav>
 
-    <!-- slot-a: 需求背景 -->
-    <div class="slot" id="slot-a">
-      <h3>项目背景与业务痛点</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+    <main class="report-main">
 
-    <!-- slot-b: 产品目标 -->
-    <div class="slot" id="slot-b">
-      <h3>产品目标</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+      <!-- 决策摘要（结论先行） -->
+      <div class="report-section" id="sec-summary">
+        <div class="slot" id="slot-summary">
+          <h3>决策摘要</h3>
+          <div class="placeholder">待填充：P4 阶段自动生成</div>
+        </div>
+      </div>
+
+      <!-- 01 项目概览 -->
+      <div class="report-section" id="sec-overview">
+        <div class="section-num">01</div>
+        <div class="section-title">项目概览</div>
+
+        <div class="slot" id="slot-a">
+          <h3>项目背景与业务痛点</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="slot" id="slot-b">
+          <h3>产品目标</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="slot" id="slot-c">
+          <h3>目标用户</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="slot" id="slot-d">
+          <h3>关键指标</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+      </div>
+
+      <!-- 02 设计规划 -->
+      <div class="report-section" id="sec-plan">
+        <div class="section-num">02</div>
+        <div class="section-title">设计规划</div>
+
+        <div class="slot" id="slot-e">
+          <h3>设计流程</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="slot" id="slot-f">
+          <h3>页面清单</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="workspace-link">
+          <span>完整设计稿及跨域参考截图已交付在工作台中</span>
+          <button class="ws-btn" onclick="switchTab('workspace')">查看工作台</button>
+        </div>
+      </div>
+
+      <!-- 03 设计验证 -->
+      <div class="report-section" id="sec-verify">
+        <div class="section-num">03</div>
+        <div class="section-title">设计验证</div>
+
+        <div class="slot" id="slot-h">
+          <h3>设计自检</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+
+        <div class="slot" id="slot-gap-check" style="display:none;">
+          <h3>待确认事项</h3>
+          <div class="placeholder">待填充</div>
+        </div>
+      </div>
+
+      <!-- 04 命中与采用 -->
+      <div class="report-section" id="sec-evidence">
+        <div class="section-num">04</div>
+        <div class="section-title">命中与采用</div>
+
+        <div class="slot" id="slot-i-summary">
+          <h3>设计依据汇总</h3>
+          <p style="font-size:13px;color:var(--sub);margin-bottom:12px;">本方案中每项设计决策的信息来源与推理过程。</p>
+          <div class="placeholder">待填充</div>
+        </div>
+      </div>
+
+      <footer>设计方案汇报</footer>
+    </main>
   </div>
-</section>
+</div>
 
 <!-- ============================================================ -->
-<!-- 二、用户与指标 -->
+<!-- TAB 2: 工作台 -->
 <!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">02</div>
-    <div class="section-title">用户与指标</div>
-    <div class="section-divider"></div>
+<div id="tab-workspace" class="tab-panel">
+  <div class="workspace">
+    <main class="stage" data-panzoom-stage>
+      <div class="canvas" data-panzoom-canvas>
+        <div class="canvas-inner">
 
-    <!-- slot-c: 目标用户 -->
-    <div class="slot" id="slot-c">
-      <h3>目标用户</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+          <!-- slot-g: 页面设计（P3 填充，matrix 或 phone-grid 布局） -->
+          <section class="slot" id="slot-g" style="border:none;background:transparent;padding:0;">
+            <div style="padding:60px;text-align:center;">
+              <div class="placeholder">待填充：P3 阶段生成页面设计</div>
+            </div>
+          </section>
 
-    <!-- slot-d: 关键指标 -->
-    <div class="slot" id="slot-d">
-      <h3>关键指标</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+          <!-- slot-i-gallery: 同类页面参考（追加区，不可覆盖） -->
+          <section class="slot" id="slot-i-gallery" style="border:none;background:transparent;padding:0;">
+            <div style="padding:60px;text-align:center;">
+              <div class="placeholder">待填充：跨域参考截图</div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <div class="zoom-panel">
+        <div class="zoom-toolbar">
+          <button type="button" data-panzoom-out>-</button>
+          <strong data-panzoom-value>100%</strong>
+          <button type="button" data-panzoom-in>+</button>
+          <button type="button" data-panzoom-reset>&#8634;</button>
+        </div>
+        <div class="zoom-help">Space + 拖拽画布 / Ctrl + 滚轮缩放</div>
+      </div>
+    </main>
   </div>
-</section>
+</div>
 
 <!-- ============================================================ -->
-<!-- 三、设计规划 -->
+<!-- IMAGE PREVIEW OVERLAY -->
 <!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">03</div>
-    <div class="section-title">设计规划</div>
-    <div class="section-divider"></div>
+<div class="image-preview" id="imagePreview" aria-hidden="true">
+  <button type="button">&#215;</button>
+  <img alt="">
+</div>
 
-    <!-- slot-e: 设计流程 -->
-    <div class="slot" id="slot-e">
-      <h3>设计流程</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+<script>
+/* ---- Tab Switching ---- */
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.tab === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(function(panel) {
+    panel.classList.toggle('active', panel.id === 'tab-' + name);
+  });
+  if (name === 'workspace' && !window._pzInit) initPanZoom();
+}
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { switchTab(btn.dataset.tab); });
+});
 
-    <!-- slot-f: 页面清单 -->
-    <div class="slot" id="slot-f">
-      <h3>页面清单</h3>
-      <div class="placeholder">待填充</div>
-    </div>
-  </div>
-</section>
+/* ---- Image Preview ---- */
+(function() {
+  var overlay = document.getElementById('imagePreview');
+  var img = overlay.querySelector('img');
+  function close() { overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true'); img.removeAttribute('src'); }
+  document.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-preview-src]') || (e.target.tagName === 'IMG' && e.target.closest('.evidence-card,.evidence-shot,.candidate-card,.ref-card') ? e.target : null);
+    if (!t) return;
+    img.src = t.dataset && t.dataset.previewSrc ? t.dataset.previewSrc : t.currentSrc || t.src;
+    img.alt = t.alt || '';
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden','false');
+  });
+  overlay.addEventListener('click', function(e) { if (e.target === overlay || e.target.closest('button')) close(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close(); });
+})();
 
-<!-- ============================================================ -->
-<!-- 四、设计方案 -->
-<!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">04</div>
-    <div class="section-title">设计方案</div>
-    <div class="section-divider"></div>
+/* ---- Pan / Zoom (Workspace canvas) ---- */
+function initPanZoom() {
+  var stage = document.querySelector('[data-panzoom-stage]');
+  if (!stage) return;
+  window._pzInit = true;
+  var canvas = stage.querySelector('[data-panzoom-canvas]');
+  var label = stage.querySelector('[data-panzoom-value]');
+  var tf = { x: 0, y: 0, s: 1 };
+  var space = false, drag = false, ds = {};
 
-    <!-- slot-g: 设计稿 -->
-    <div class="slot" id="slot-g">
-      <h3>页面设计</h3>
-      <div class="placeholder">待填充</div>
-    </div>
-  </div>
-</section>
+  function render() {
+    canvas.style.transform = 'translate(' + tf.x + 'px,' + tf.y + 'px) scale(' + tf.s + ')';
+    stage.style.backgroundPosition = tf.x + 'px ' + tf.y + 'px';
+    if (label) label.textContent = Math.round(tf.s * 100) + '%';
+  }
+  function zoom(next, ax, ay) {
+    var old = tf.s;
+    var ns = Math.min(3, Math.max(0.15, next));
+    var r = ns / old;
+    if (ax !== undefined) { tf.x = ax - (ax - tf.x) * r; tf.y = ay - (ay - tf.y) * r; }
+    tf.s = ns;
+    render();
+  }
 
-<!-- ============================================================ -->
-<!-- 五、设计验证 -->
-<!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">05</div>
-    <div class="section-title">设计验证</div>
-    <div class="section-divider"></div>
+  stage.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    if (e.ctrlKey || e.metaKey) {
+      var rect = stage.getBoundingClientRect();
+      zoom(tf.s + (e.deltaY > 0 ? -0.03 : 0.03), e.clientX - rect.left, e.clientY - rect.top);
+    } else { tf.x -= e.deltaX; tf.y -= e.deltaY; render(); }
+  }, { passive: false });
 
-    <!-- slot-h: 自检 -->
-    <div class="slot" id="slot-h">
-      <h3>设计自检</h3>
-      <div class="placeholder">待填充</div>
-    </div>
+  window.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && !space && !e.target.matches('input,textarea,select')) { e.preventDefault(); space = true; stage.classList.add('space-ready'); }
+  });
+  window.addEventListener('keyup', function(e) {
+    if (e.code === 'Space') { space = false; drag = false; stage.classList.remove('space-ready','dragging'); }
+  });
+  stage.addEventListener('mousedown', function(e) {
+    if (!space && e.button !== 1) return;
+    drag = true; ds = { x: e.clientX, y: e.clientY, tx: tf.x, ty: tf.y };
+    stage.classList.add('dragging');
+  });
+  stage.addEventListener('mousemove', function(e) {
+    if (!drag) return;
+    tf.x = ds.tx + (e.clientX - ds.x);
+    tf.y = ds.ty + (e.clientY - ds.y);
+    render();
+  });
+  stage.addEventListener('mouseup', function() { drag = false; stage.classList.remove('dragging'); });
+  stage.addEventListener('mouseleave', function() { drag = false; stage.classList.remove('dragging'); });
 
-    <!-- slot-gap-check: 待确认事项（有内容时显示） -->
-    <div class="slot" id="slot-gap-check" style="display:none;">
-      <h3>待确认事项</h3>
-      <div class="placeholder">待填充</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- 附录 -->
-<!-- ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">附录</div>
-    <div class="section-title">设计依据与参考</div>
-    <div class="section-divider"></div>
-
-    <!-- slot-i-gallery: 同类参考（追加区，不可覆盖） -->
-    <div class="slot" id="slot-i-gallery">
-      <h3>同类页面参考</h3>
-      <p class="section-desc" style="margin-bottom:12px;">来自其他业务线的相似页面，作为本次设计的参考依据。</p>
-      <div class="placeholder">待填充</div>
-    </div>
-
-    <!-- slot-i-summary: 证据汇总（P4 定稿） -->
-    <div class="slot" id="slot-i-summary">
-      <h3>设计依据汇总</h3>
-      <p class="section-desc" style="margin-bottom:12px;">本方案中每项设计决策的信息来源与推理过程。</p>
-      <div class="placeholder">待填充</div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <p>设计方案汇报</p>
-  </div>
-</footer>
-
+  var half = function() { return { x: stage.clientWidth / 2, y: stage.clientHeight / 2 }; };
+  stage.querySelector('[data-panzoom-in]').addEventListener('click', function() { var c = half(); zoom(tf.s + 0.1, c.x, c.y); });
+  stage.querySelector('[data-panzoom-out]').addEventListener('click', function() { var c = half(); zoom(tf.s - 0.1, c.x, c.y); });
+  stage.querySelector('[data-panzoom-reset]').addEventListener('click', function() { tf = { x: 0, y: 0, s: 1 }; render(); });
+  render();
+}
+</script>
 </body>
 </html>

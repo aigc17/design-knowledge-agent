@@ -28,14 +28,16 @@ P3 阶段：填充 Slot G（375×812 iOS 设计稿）。
 3. 生成 iOS 375×812 pt UI（phone-frame 容器）
 4. 附设计说明 + 来源标注（📗/📘/🔮）
 
-### 4. 填充 Slot G
+### 4. 填充 Slot G（位于「工作台」Tab）
 
 所有页面的设计稿嵌入 `id="slot-g"`，替换 placeholder。
-使用 phone-grid > phone-wrap > phone-frame > phone-screen 结构。
+推荐 matrix 布局：每页一列（node-card → phone-frame → evidence-shot），并排对比。
+也可用 phone-grid > phone-wrap > phone-frame > phone-screen 结构。
 
-### 5. I-gallery 追加
+### 5. I-gallery 追加（位于「工作台」Tab）
 
 设计中新引用的跨域截图追加到 `id="slot-i-gallery"`。
+推荐用 candidate-board 暗色面板分组展示。
 
 ### 6. 保存状态
 
