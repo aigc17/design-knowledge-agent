@@ -4,3 +4,8 @@
 *~
 .env
 node_modules/
+
+# biz-solution 运行时产物（每人本地生成，不入库）
+.biz-session.json
+业务知识库/.biz-session.json
+业务知识库/output/
