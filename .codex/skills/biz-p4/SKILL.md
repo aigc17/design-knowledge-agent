@@ -20,9 +20,9 @@ P4 阶段：填充 Slot summary（决策摘要）+ Slot H（四维自检）+ 定
 
 按 `sectionSchema.P4` 重新读命中文档的「五、黄金流程完整描述」「六、经验沉淀」，提取业务规则和异常路径。
 
-### 3. 填充 Slot summary — 决策摘要
+### 3. 填充 Slot summary — 决策摘要（汇报 Tab 末尾）
 
-定位 `id="slot-summary"`，替换 placeholder。用 KV 表格呈现：
+定位 `id="slot-summary"`（位于 04 命中与采用之后、footer 之前），替换 placeholder。用 KV 表格呈现：
 - **本轮结论**：一句话说明方案核心
 - **核心理由**：为什么这样设计
 - **复用边界**：哪些有知识库支撑，哪些是新增
