@@ -1,6 +1,6 @@
 # Design Knowledge Agent
 
-> 业务知识库驱动的设计方案自动化工具 — 用 Claude Code Skill 把 18 篇业务知识文档变成可交付的设计方案。
+> 业务知识库驱动的设计方案自动化工具 — 18 篇业务知识文档变成可交付的设计方案。支持 Claude Code / Codex CLI / Cursor 三端。
 
 ## 这是什么
 
@@ -21,21 +21,30 @@ P4 整体评审 → 四维自检 + 知识库证据汇总
 
 ## 快速开始
 
-**前提**：已安装 [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
+### Claude Code
 
 ```bash
 git clone https://github.com/aigc17/design-knowledge-agent.git
 cd design-knowledge-agent
 claude
+# 输入：/biz-solution 还借宝新增退款确认页
 ```
 
-进入 Claude Code 后输入：
+### Codex CLI
+
+```bash
+git clone https://github.com/aigc17/design-knowledge-agent.git
+cd design-knowledge-agent
+codex "使用 biz-solution skill，需求：还借宝新增退款确认页"
+```
+
+### Cursor
 
 ```
-/biz-solution 你的需求描述
+1. 用 Cursor 打开 clone 下来的项目
+2. .cursor/rules/biz-solution.mdc 会被自动加载
+3. 在 Agent 模式对话：帮我产出设计方案，需求是还借宝新增退款确认页
 ```
-
-AI 会逐阶段产出，每阶段暂停确认，最终生成 `业务知识库/output/{名称}-report.html`，浏览器打开即可查看。
 
 ## 知识库覆盖范围
 
@@ -106,22 +115,25 @@ git push
 ## 项目结构
 
 ```
-.claude/commands/          Claude Code Skill 定义
-  biz-solution.md          设计方案产出（主力 Skill）
-  biz-review.md            设计方案评审
-  biz-analyze.md           需求拆解分析
+.claude/commands/              Claude Code Skill
+  biz-solution.md              设计方案产出（主力）
+  biz-review.md                设计方案评审
+  biz-analyze.md               需求拆解分析
+
+.codex/skills/biz-solution/    Codex CLI Skill
+  SKILL.md                     同工作流，Codex 格式
+
+.cursor/rules/                 Cursor Rules
+  biz-solution.mdc             同工作流，被动规则格式
+
+CLAUDE.md                      Claude Code 项目指令
+AGENTS.md                      Codex CLI 项目指令
 
 业务知识库/
-  manifest.json            知识路由索引（Agent 读这个文件决定读哪篇文档）
-  设计方案汇报模板.html     9+1 槽位 HTML 模板
-  ai/                      知识文档（6 域 × 18 篇）
-    平台/                  注销、注册登录
-    风控/                  还借宝、还款减压、提额降息
-    消金/                  用信、授信
-    支付还款/              还款
-    普惠/                  授信、用信
-    海外/                  墨西哥×4、印尼×4
-  output/                  运行时输出（不入库）
+  manifest.json                知识路由索引
+  设计方案汇报模板.html         9+1 槽位 HTML 模板
+  ai/                          知识文档（6 域 × 18 篇）
+  output/                      运行时输出（不入库）
 ```
 
 ## 工作原理

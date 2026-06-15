@@ -1,0 +1,64 @@
+---
+description: "业务知识库驱动的设计方案产出。用户提到设计方案、需求分析、页面设计、知识库时自动激活。4 阶段工作流：P1 需求理解 → P2 页面清单 → P3 逐页设计 → P4 整体评审。"
+globs: "业务知识库/**/*.md, 业务知识库/manifest.json, 业务知识库/设计方案汇报模板.html, .biz-session.json"
+alwaysApply: false
+---
+
+# biz-solution — 设计方案产出
+
+当用户要求产出设计方案、分析需求或设计页面时，遵循以下工作流。
+
+## 启动协议
+
+1. 读取 `业务知识库/manifest.json`（知识路由索引）
+2. 读取 `业务知识库/设计方案汇报模板.html`（9+1 槽位 HTML 模板）
+3. 检查 `业务知识库/.biz-session.json`（会话状态，存在则继续）
+4. 知识路由：
+   - 第一遍：`keywords` + `match` 精确命中 1-3 篇文档
+   - 第二遍：扫描 `pages[]` 做跨域相似匹配 + `flowArchetype` 做流程同构匹配
+   - 按 `sectionSchema` 分阶段读章节，不要一次读全文
+5. 复制模板到 `业务知识库/output/{简称}-report.html`
+
+## 来源标注
+
+每条内容必须标注：📗 KB（精确命中）/ 📘 跨域参考（相似页面）/ 🔮 推理（KB 无覆盖）
+
+## 槽位操作
+
+- 定位 `id="slot-X"` 替换 placeholder，`badge-pending` → `badge-filled`
+- **I-gallery**（`id="slot-i-gallery"`）= 只追加不替换（跨域截图画廊）
+- **I-summary**（`id="slot-i-summary"`）= P4 定稿时一次性写入
+
+## 四阶段工作流
+
+### P1 需求理解 → Slot A/B/C/D
+
+读取命中文档的「项目目标」「目标用户特征」「数据指标」章节。
+- A 需求背景 / B 产品目标 / C 目标用户 / D 关键指标
+- I-gallery 追加跨域截图
+- KB 预检：扫描决策点覆盖度，写入 `slot-gap-check`
+- **暂停**：请用户确认 Part 1
+
+### P2 页面清单 → Slot E/F
+
+读取「页面识别总表」「黄金流程」章节。
+- E 设计流程（主链路 + 分支 + 流程同构分析）
+- F 页面清单表格
+- crossRefs 标记 adopted: true/false
+- **暂停**：请用户确认页面清单
+
+### P3 逐页设计 → Slot G
+
+对 inventory 所有页面一次性设计 iOS 375×812 pt UI。
+引用 adopted=true 的跨域截图作参考。
+- **暂停**：请用户确认设计
+
+### P4 整体评审 → Slot H + I-summary
+
+- H 四维自检（流程完整 / 规则一致 / UI 合规 / 信息不足）
+- I-summary 定稿（📗/📘/🔮 汇总 + KB 建议 + 矛盾检测）
+- **暂停**：请用户最终确认
+
+## 产出
+
+最终产物：`业务知识库/output/{简称}-report.html`（9+1 槽位全部填满）
