@@ -4,7 +4,7 @@
 
 ## 可用 Skills
 
-- **biz-solution** — 设计方案产出总览（指向 biz-p1 ~ biz-p4）
+- **biz-solution** — Codex 交互式主入口，按 `.biz-session.json` 在对话中连续推进 P1 ~ P4
 - **biz-p1** — P1 需求理解：Slot A-D + 知识库预检
 - **biz-p2** — P2 页面清单：Slot E-F + 流程同构
 - **biz-p3** — P3 逐页设计：Slot G（工作台 Tab）
@@ -31,3 +31,4 @@
 4. 每条设计内容标注来源：知识库 / 跨域参考 / 推理
 5. 设计尺寸 iOS 375 x 812 pt
 6. 工作台 Tab 的 slot-g 推荐 matrix 布局（每页一列）
+7. Codex 使用 `biz-solution` 时不要让用户手动调用 `biz-p1` ~ `biz-p4`；主入口根据 phase 执行当前阶段，阶段结束等待用户确认后续跑

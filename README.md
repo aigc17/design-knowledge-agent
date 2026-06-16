@@ -4,7 +4,7 @@
 
 ## 这是什么
 
-设计师输入一句需求描述，AI 自动完成 4 个阶段，产出一份带完整来源追溯的设计方案 HTML（双 Tab：汇报视图 + 工作台视图）：
+设计师输入一句需求描述，AI 在同一段对话中按确认点推进 4 个阶段，产出一份带完整来源追溯的设计方案 HTML（双 Tab：汇报视图 + 工作台视图）：
 
 ```
 /biz-solution 还借宝新增退款确认页
@@ -37,6 +37,8 @@ git clone https://github.com/aigc17/design-knowledge-agent.git
 cd design-knowledge-agent
 codex "使用 biz-solution skill，需求：还借宝新增退款确认页"
 ```
+
+Codex 会把 `biz-solution` 作为交互式主入口：先完成 P1 并等待确认；用户回复“继续”后，依据 `业务知识库/.biz-session.json` 自动进入 P2、P3、P4，不需要手动分别调用 `biz-p1` 到 `biz-p4`。
 
 ### Cursor
 
@@ -120,8 +122,8 @@ git push
   biz-review.md                设计方案评审
   biz-analyze.md               需求拆解分析
 
-.codex/skills/                 Codex CLI Skill（4 阶段拆分）
-  biz-solution/SKILL.md        总览
+.codex/skills/                 Codex CLI Skill（交互式主入口 + 4 阶段拆分）
+  biz-solution/SKILL.md        主入口：按 session phase 编排 P1-P4
   biz-p1/ ~ biz-p4/            4 个独立阶段 Skill
 
 .cursor/rules/                 Cursor Rules

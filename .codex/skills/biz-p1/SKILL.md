@@ -13,8 +13,8 @@ P1 阶段：读取知识库，填充 Slot A-D + 知识库覆盖度预检。
 1. 读取 `业务知识库/manifest.json`
 2. 读取 `业务知识库/设计方案汇报模板.html`
 3. 检查 `业务知识库/.biz-session.json`
-   - 存在且 phase 不是 understanding → 提示用户当前已在后续阶段
-   - 不存在 → 用用户输入的需求创建新会话
+   - 不存在 → 用用户输入的需求创建新会话，执行 P1
+   - 存在且由 `biz-solution` 主入口续跑 → 不重复执行 P1，交还主入口按 phase 推进
 
 ### 2. 知识路由
 
@@ -57,7 +57,20 @@ P1 阶段：读取知识库，填充 Slot A-D + 知识库覆盖度预检。
 
 ### 7. 保存状态
 
-写入 `业务知识库/.biz-session.json`，`phase: "understanding"`。
+写入 `业务知识库/.biz-session.json`，至少包含：
+
+```json
+{
+  "sessionId": "ses_YYYYMMDD_slug",
+  "phase": "understanding",
+  "requirement": "用户原始需求",
+  "kbHits": ["业务知识库/ai/...md"],
+  "crossRefs": [],
+  "inventory": [],
+  "decisions": [],
+  "reportFile": "业务知识库/output/{slug}-report.html"
+}
+```
 
 ### 8. 产出
 
