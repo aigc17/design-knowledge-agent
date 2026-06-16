@@ -41,7 +41,7 @@
   .nav-list { display: flex; flex-direction: column; gap: 2px; }
   .nav-link { display: block; padding: 7px 10px; border-radius: 4px; color: var(--sub); font-size: 13px; }
   .nav-link:hover { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-  .report-main { padding: 40px 48px 64px; max-width: 860px; margin: 32px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+  .report-main { padding: 40px 48px 64px; max-width: 960px; margin: 32px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
 
   /* ---- Section ---- */
   .section-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
@@ -133,8 +133,8 @@
   .phone-wrap { display: flex; flex-direction: column; align-items: center; }
   .phone-label { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
   .phone-sublabel { font-size: 12px; color: var(--sub); margin-bottom: 10px; text-align: center; }
-  .phone-frame { width: 280px; border: 2px solid #1a1a2e; border-radius: 32px; overflow: hidden; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
-  .phone-screen { width: 100%; aspect-ratio: 375/812; overflow: hidden; position: relative; font-family: -apple-system, 'PingFang SC', sans-serif; }
+  .phone-frame { width: 280px; border: none !important; outline: none !important; border-radius: 0 !important; overflow: hidden; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+  .phone-screen { width: 100%; aspect-ratio: 375/812; overflow: hidden; position: relative; border: none !important; outline: none !important; border-radius: 0 !important; font-family: -apple-system, 'PingFang SC', sans-serif; }
 
   /* ======== Tab 2: Workspace ======== */
   .workspace { height: calc(100vh - var(--topbar-h)); display: flex; }

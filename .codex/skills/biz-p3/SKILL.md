@@ -8,7 +8,7 @@ P3 阶段：填充 Slot G（375×812 iOS 设计稿）。
 
 ## Prerequisites
 
-`业务知识库/.biz-session.json` 必须存在且 `phase: "inventory"`。若不满足，提示用户先运行 `$biz-p2`。
+`业务知识库/.biz-session.json` 必须存在且 `phase: "inventory"`。若不满足，交还 `biz-solution` 主入口判断当前阶段，不要求用户手动调用底层 Skill。
 
 ## Instructions
 
@@ -27,6 +27,8 @@ P3 阶段：填充 Slot G（375×812 iOS 设计稿）。
 2. 检查 `crossRefs[]` 中 `adopted: true` 的条目，引用截图 URL 作参考
 3. 生成 iOS 375×812 pt UI（phone-frame 容器）
 4. 附设计说明 + 来源标注（📗/📘/🔮）
+
+工作台中的 `phone-frame` 是平面设计稿画板，不是手机设备壳。不得添加黑色描边、设备圆角、刘海/外壳装饰；保持 `border: none`、`border-radius: 0`。
 
 ### 4. 填充 Slot G（位于「工作台」Tab）
 

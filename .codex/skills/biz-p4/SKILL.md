@@ -8,7 +8,7 @@ P4 阶段：填充 Slot summary（决策摘要）+ Slot H（四维自检）+ 定
 
 ## Prerequisites
 
-`业务知识库/.biz-session.json` 必须存在且 `phase: "page-design"`。若不满足，提示用户先运行 `$biz-p3`。
+`业务知识库/.biz-session.json` 必须存在且 `phase: "page-design"`。若不满足，交还 `biz-solution` 主入口判断当前阶段，不要求用户手动调用底层 Skill。
 
 ## Instructions
 
