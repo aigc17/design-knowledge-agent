@@ -100,6 +100,11 @@ $ARGUMENTS
 - **B 产品目标** — 目标 + 衡量方式（[知识库]/[推理]）
 - **C 目标用户** — 用户群特征（[知识库]/[推理]）
 - **D 关键指标** — 默认跳过（`display:none`），仅当用户主动提及指标时才填充并显示
+- P1 首屏必须使用模板组件，不输出连续裸段落：
+  - Slot A 使用 `.content-item`，每段正文后跟 `.source-note`
+  - Slot B 使用 `.content-item`，目标名用 `<strong>1. 目标名</strong> — 说明`
+  - Slot C 优先使用 `.info-table`，列为 `客群 | 特征 | 场景`，表格后跟 `.source-note`
+  - 来源只写在 `.source-note`，不要把 `[知识库]`、`[跨域参考]`、`[推理]` 拼在正文末尾
 
 **I-gallery 追加**：
 - 本阶段发现的跨域参考截图卡片追加到 I-gallery

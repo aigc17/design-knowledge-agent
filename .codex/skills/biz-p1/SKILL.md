@@ -40,6 +40,52 @@ P1 阶段：读取知识库，填充 Slot A-D + 知识库覆盖度预检。
 - **C 目标用户** — 用户群特征（[知识库]/[推理]）
 - **D 关键指标** — 默认跳过（`display:none`），仅当用户主动提及指标时才填充并显示
 
+#### P1 HTML 输出契约
+
+P1 是汇报首屏，必须使用模板组件做排版，不允许输出连续裸段落。
+
+- Slot A：使用 1-3 个 `.content-item`，每个 item 内正文后跟 `.source-note`。
+- Slot B：使用 2-4 个 `.content-item`，目标名用 `<strong>1. 目标名</strong> — 说明`，正文后跟 `.source-note`。
+- Slot C：优先使用 `.info-table`，列为 `客群 | 特征 | 场景`；表格后追加 `.source-note`。
+- Slot D：仅用户主动要求指标时显示，使用 `.metric-grid` + `.info-table`。
+- 来源只写在 `.source-note` 中，不要把 `[知识库]`、`[跨域参考]`、`[推理]` 直接拼在正文末尾。
+- 不要在 Slot A-D 内直接输出裸 `<p>` 作为主要内容。
+
+推荐结构：
+
+```html
+<div class="slot filled" id="slot-a">
+  <h3>项目背景与业务痛点</h3>
+  <div class="content-item">
+    {背景/痛点正文}
+    <div class="source-note">[知识库] {文档/章节} + [推理] {说明}</div>
+  </div>
+  <div class="content-item">
+    {第二个判断}
+    <div class="source-note">[推理] {说明}</div>
+  </div>
+</div>
+
+<div class="slot filled" id="slot-b">
+  <h3>产品目标</h3>
+  <div class="content-item">
+    <strong>1. {目标名}</strong> — {目标说明}
+    <div class="source-note">[知识库] {文档/章节}</div>
+  </div>
+</div>
+
+<div class="slot filled" id="slot-c">
+  <h3>目标用户</h3>
+  <table class="info-table">
+    <thead><tr><th>客群</th><th>特征</th><th>场景</th></tr></thead>
+    <tbody>
+      <tr><td>{客群}</td><td>{特征}</td><td>{场景}</td></tr>
+    </tbody>
+  </table>
+  <div class="source-note" style="margin-top:8px;">[知识库] {文档/章节}</div>
+</div>
+```
+
 定位 `id="slot-a"` ~ `id="slot-d"`，替换 placeholder，badge 改为 filled。
 
 ### 5. I-gallery 追加

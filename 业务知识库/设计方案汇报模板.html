@@ -279,21 +279,41 @@
         <div class="section-num">01</div>
         <div class="section-title">项目概览</div>
 
+        <!--
+          [SLOT CONTRACT: A]
+          P1 必须使用 .content-item 分段输出，每段正文后跟 .source-note。
+          不允许直接输出裸 <p>，不允许把 [知识库]/[推理] 混在正文末尾。
+        -->
         <div class="slot" id="slot-a">
           <h3>项目背景与业务痛点</h3>
           <div class="placeholder">待填充</div>
         </div>
 
+        <!--
+          [SLOT CONTRACT: B]
+          P1 必须使用 .content-item 输出 2-4 条产品目标：
+          <strong>1. 目标名</strong> — 目标说明
+          <div class="source-note">来源说明</div>
+        -->
         <div class="slot" id="slot-b">
           <h3>产品目标</h3>
           <div class="placeholder">待填充</div>
         </div>
 
+        <!--
+          [SLOT CONTRACT: C]
+          P1 优先使用 .info-table 输出目标用户，列为：客群 | 特征 | 场景。
+          表格后追加 .source-note。不得用连续裸段落代替表格。
+        -->
         <div class="slot" id="slot-c">
           <h3>目标用户</h3>
           <div class="placeholder">待填充</div>
         </div>
 
+        <!--
+          [SLOT CONTRACT: D]
+          仅用户主动要求指标时显示。使用 .metric-grid + .info-table，不输出裸段落。
+        -->
         <div class="slot" id="slot-d" style="display:none;">
           <h3>关键指标</h3>
           <div class="placeholder">待填充</div>

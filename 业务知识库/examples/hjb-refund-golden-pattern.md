@@ -9,6 +9,42 @@
 - 不适用：作为知识库内容被路由、引用或推理。
 - 真相源：`业务知识库/设计方案汇报模板.html` + `.codex/skills/biz-p*.md`。
 
+## P1 项目概览
+
+Slot A/B/C 是汇报首屏，必须使用模板组件，不输出裸段落。
+
+Slot A 使用 `.content-item` 分段：
+
+```html
+<div class="content-item">
+  {背景与业务痛点正文}
+  <div class="source-note">[知识库] {文档/章节} + [推理] {说明}</div>
+</div>
+```
+
+Slot B 使用 `.content-item` 输出目标：
+
+```html
+<div class="content-item">
+  <strong>1. {目标名}</strong> — {目标说明}
+  <div class="source-note">[知识库] {文档/章节}</div>
+</div>
+```
+
+Slot C 使用 `.info-table` 输出目标用户：
+
+```html
+<table class="info-table">
+  <thead><tr><th>客群</th><th>特征</th><th>场景</th></tr></thead>
+  <tbody>
+    <tr><td>{客群}</td><td>{特征}</td><td>{场景}</td></tr>
+  </tbody>
+</table>
+<div class="source-note" style="margin-top:8px;">[知识库] {文档/章节}</div>
+```
+
+来源只放在 `.source-note` 中，不要把 `[知识库]`、`[跨域参考]`、`[推理]` 混进正文。
+
 ## P2 设计规划
 
 Slot E 必须是两段式：
