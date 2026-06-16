@@ -3,651 +3,288 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>业务知识库 · 项目价值汇报</title>
+<title>业务知识库 · 价值汇报</title>
 <style>
-  /* ══════════════════════════════════════════════════
-     RESET & TOKENS
-     ══════════════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg:       #0a0e17;
-    --surface:  #111827;
-    --card:     #1a2332;
-    --card2:    #151d2b;
-    --border:   #2a3444;
-    --text:     #e2e8f0;
-    --muted:    #94a3b8;
-    --faint:    #64748b;
-    --accent:   #3b82f6;
-    --accent2:  #8b5cf6;
-    --green:    #10b981;
-    --orange:   #f59e0b;
-    --pink:     #ec4899;
-    --red:      #ef4444;
-    --cyan:     #06b6d4;
-    --radius:   14px;
+    --bg: #f5f7fa; --surface: #fff; --border: #e5e7eb; --border-l: #f0f1f3;
+    --text: #1e2533; --sub: #6b7280; --muted: #9ca3af;
+    --accent: #2563eb; --accent-soft: #eff6ff;
+    --green: #059669; --green-soft: #ecfdf5;
+    --warn: #d97706; --warn-soft: #fffbeb;
+    --red: #dc2626; --red-soft: #fef2f2;
+    --dark: #111827; --radius: 8px;
   }
-
   html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+  /* ---- Top Bar ---- */
+  .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 32px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.96); backdrop-filter: blur(8px); }
+  .topbar h1 { font-size: 15px; font-weight: 700; }
+  .topbar .tag { font-size: 12px; color: var(--muted); }
+  .topbar nav { display: flex; gap: 22px; font-size: 13px; }
+  .topbar nav a { color: var(--sub); text-decoration: none; }
+  .topbar nav a:hover { color: var(--accent); }
+  @media (max-width: 720px) { .topbar nav { display: none; } }
 
-  ::selection { background: rgba(139,92,246,0.35); }
+  /* ---- Shell ---- */
+  .main { max-width: 940px; margin: 28px auto; padding: 0 24px 64px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.04); padding: 40px 44px; margin-bottom: 24px; }
+  @media (max-width: 640px) { .card { padding: 28px 22px; } }
 
-  /* ── layout ── */
-  .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
-  .narrow { max-width: 920px; }
+  /* ---- Hero ---- */
+  .hero { text-align: center; padding: 52px 44px 44px; background: linear-gradient(180deg, #fbfcff 0%, #fff 100%); }
+  .hero .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--accent); background: var(--accent-soft); padding: 5px 14px; border-radius: 20px; margin-bottom: 22px; }
+  .hero h2 { font-size: 32px; font-weight: 800; letter-spacing: -.5px; line-height: 1.3; margin-bottom: 16px; }
+  .hero h2 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--sub); max-width: 600px; margin: 0 auto; }
+  @media (max-width: 640px) { .hero h2 { font-size: 24px; } }
 
-  /* ══════════════════════════════════════════════════
-     NAV
-     ══════════════════════════════════════════════════ */
-  .topnav {
-    position: sticky; top: 0; z-index: 50;
-    backdrop-filter: blur(14px);
-    background: rgba(10,14,23,0.72);
-    border-bottom: 1px solid var(--border);
-  }
-  .topnav .inner {
-    max-width: 1160px; margin: 0 auto; padding: 14px 28px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.2px; }
-  .brand .logo {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: grid; place-items: center; font-size: 15px;
-  }
-  .navlinks { display: flex; gap: 26px; font-size: 14px; }
-  .navlinks a { color: var(--muted); text-decoration: none; transition: color .2s; }
-  .navlinks a:hover { color: var(--text); }
-  @media (max-width: 720px) { .navlinks { display: none; } }
+  /* ---- Metric band ---- */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 36px; }
+  .metric { padding: 18px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: #fbfcff; }
+  .metric b { display: block; color: var(--accent); font-size: 30px; line-height: 1.1; font-weight: 800; }
+  .metric span { display: block; margin-top: 6px; color: var(--sub); font-size: 12.5px; }
+  @media (max-width: 640px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
 
-  /* ══════════════════════════════════════════════════
-     HERO
-     ══════════════════════════════════════════════════ */
-  .hero {
-    position: relative;
-    text-align: center;
-    padding: 96px 0 72px;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background:
-      radial-gradient(600px 300px at 50% -10%, rgba(59,130,246,0.16), transparent 70%),
-      radial-gradient(500px 260px at 80% 20%, rgba(139,92,246,0.12), transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    position: relative;
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 16px; border-radius: 30px;
-    background: rgba(59,130,246,0.1);
-    border: 1px solid rgba(59,130,246,0.25);
-    color: #93c5fd; font-size: 13px; font-weight: 500; margin-bottom: 26px;
-  }
-  .hero-badge .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(16,185,129,.6); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(16,185,129,.5);} 70%{box-shadow:0 0 0 7px rgba(16,185,129,0);} 100%{box-shadow:0 0 0 0 rgba(16,185,129,0);} }
+  /* ---- Section head ---- */
+  .sec-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+  .sec-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .sec-lead { font-size: 15px; color: var(--sub); margin-bottom: 28px; }
 
-  .hero h1 { position: relative; font-size: 52px; font-weight: 800; letter-spacing: -1.2px; line-height: 1.15; margin-bottom: 22px; }
-  .hero h1 .grad { background: linear-gradient(120deg, #60a5fa, #a78bfa 60%, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .hero .lead { position: relative; font-size: 19px; color: var(--muted); max-width: 680px; margin: 0 auto 14px; }
-  .hero .sub { position: relative; font-size: 15px; color: var(--faint); max-width: 600px; margin: 0 auto; }
-  @media (max-width: 640px) { .hero h1 { font-size: 36px; } .hero .lead { font-size: 17px; } }
+  /* ---- One-liner callout ---- */
+  .statement { padding: 20px 24px; background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 17px; font-weight: 600; color: #1e3a8a; line-height: 1.55; }
 
-  /* ── stat band ── */
-  .statband {
-    position: relative;
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
-    max-width: 920px; margin: 56px auto 0;
-    background: var(--border); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden;
-  }
-  .statband .cell { background: var(--surface); padding: 24px 14px; text-align: center; }
-  .statband .num { font-size: 34px; font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .statband .lbl { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
-  @media (max-width: 720px) { .statband { grid-template-columns: repeat(2,1fr); } .statband .cell:last-child { grid-column: span 2; } }
+  /* ---- Pain cards ---- */
+  .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px) { .cols3 { grid-template-columns: 1fr; } }
+  .pain { padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; }
+  .pain .ico { width: 34px; height: 34px; border-radius: 8px; background: var(--red-soft); color: var(--red); display: grid; place-items: center; font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+  .pain h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .pain p { font-size: 13.5px; color: var(--sub); }
 
-  /* ══════════════════════════════════════════════════
-     SECTION SCAFFOLD
-     ══════════════════════════════════════════════════ */
-  section { padding: 78px 0; position: relative; }
-  .sec-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+  /* ---- Before / After ---- */
+  .ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; margin-top: 8px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 720px) { .ba { grid-template-columns: 1fr; } }
+  .ba .side { padding: 22px 24px; }
+  .ba .before { background: #fafafa; }
+  .ba .after { background: var(--green-soft); }
+  .ba .arrow { display: grid; place-items: center; padding: 0 18px; color: var(--muted); font-size: 22px; background: #fff; }
+  @media (max-width: 720px) { .ba .arrow { padding: 10px; } }
+  .ba .lab { font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 14px; }
+  .ba .before .lab { color: var(--muted); }
+  .ba .after .lab { color: var(--green); }
+  .ba ul { list-style: none; }
+  .ba li { font-size: 13.5px; padding: 7px 0 7px 20px; position: relative; line-height: 1.5; }
+  .ba .before li { color: var(--sub); }
+  .ba .before li::before { content: '×'; position: absolute; left: 0; color: var(--muted); font-weight: 700; }
+  .ba .after li { color: #065f46; }
+  .ba .after li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
 
-  .sec-head { margin-bottom: 48px; }
-  .sec-kicker {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-    color: var(--accent); margin-bottom: 16px;
-  }
-  .sec-kicker .idx {
-    font-family: 'SF Mono', ui-monospace, monospace;
-    background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
-    color: #93c5fd; padding: 2px 9px; border-radius: 6px; font-size: 12px;
-  }
-  .sec-head h2 { font-size: 34px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 14px; }
-  .sec-head .desc { font-size: 16.5px; color: var(--muted); max-width: 720px; }
+  /* ---- Usage rows ---- */
+  .usage { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .usage .row { display: grid; grid-template-columns: 160px 1fr; gap: 0; border-bottom: 1px solid var(--border-l); }
+  .usage .row:last-child { border-bottom: none; }
+  .usage .head { padding: 20px; background: #fbfcff; border-right: 1px solid var(--border-l); }
+  .usage .head .nm { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .usage .head .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .usage .head .badge.main { background: rgba(37,99,235,.1); color: var(--accent); }
+  .usage .head .badge.aux { background: #f3f4f6; color: var(--sub); }
+  .usage .desc { padding: 20px; }
+  .usage .desc .when { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .usage .desc .val { font-size: 14px; color: var(--text); }
+  .usage .desc .val b { color: var(--accent); }
+  @media (max-width: 640px) { .usage .row { grid-template-columns: 1fr; } .usage .head { border-right: none; border-bottom: 1px solid var(--border-l); } }
 
-  /* ── generic card ── */
-  .card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 26px;
-    transition: border-color .25s, transform .25s, box-shadow .25s;
-  }
-  .card:hover { border-color: rgba(59,130,246,0.5); transform: translateY(-3px); box-shadow: 0 12px 40px -12px rgba(0,0,0,0.6); }
+  /* ---- Flow demo ---- */
+  .demo { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: center; margin-top: 8px; }
+  @media (max-width: 760px) { .demo { grid-template-columns: 1fr; gap: 12px; } }
+  .demo .step { padding: 20px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; text-align: center; height: 100%; }
+  .demo .step .k { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--muted); margin-bottom: 10px; }
+  .demo .step .v { font-size: 14px; font-weight: 600; line-height: 1.5; }
+  .demo .step .v small { display: block; font-weight: 400; font-size: 12px; color: var(--sub); margin-top: 4px; }
+  .demo .step.accent { background: var(--accent-soft); border-color: #bfdbfe; }
+  .demo .sep { color: var(--muted); font-size: 20px; padding: 0 12px; text-align: center; }
+  @media (max-width: 760px) { .demo .sep { padding: 0; } }
 
-  .grid { display: grid; gap: 20px; }
-  .g2 { grid-template-columns: repeat(2,1fr); }
-  .g3 { grid-template-columns: repeat(3,1fr); }
-  @media (max-width: 860px) { .g2, .g3 { grid-template-columns: 1fr; } }
+  /* ---- Source note ---- */
+  .trace { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+  .trace .t { flex: 1; min-width: 200px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); }
+  .trace .t .lab { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .trace .t.t1 .lab { color: var(--green); }
+  .trace .t.t2 .lab { color: var(--accent); }
+  .trace .t.t3 .lab { color: var(--warn); }
+  .trace .t p { font-size: 12.5px; color: var(--sub); }
 
-  /* ══════════════════════════════════════════════════
-     PART 01 — 痛点三断层
-     ══════════════════════════════════════════════════ */
-  .quote-block {
-    border-left: 3px solid var(--accent2);
-    padding: 6px 0 6px 22px; margin: 0 0 44px;
-    font-size: 19px; color: #cbd5e1; font-weight: 500;
-  }
-  .quote-block b { color: #fff; }
+  /* ---- Coming soon ---- */
+  .soon { text-align: center; padding: 40px 24px; border: 1px dashed var(--border); border-radius: var(--radius); background: #fafbfc; color: var(--muted); }
+  .soon b { display: block; color: var(--sub); font-size: 15px; margin-bottom: 6px; }
+  .soon p { font-size: 13px; }
 
-  .gap-card { position: relative; overflow: hidden; }
-  .gap-card .gnum {
-    font-family: 'SF Mono', ui-monospace, monospace;
-    font-size: 13px; font-weight: 700; color: var(--red);
-    background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
-    width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 16px;
-  }
-  .gap-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-  .gap-card p { font-size: 14.5px; color: var(--muted); }
-  .gap-card .fix { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 13.5px; color: var(--green); }
-  .gap-card .fix b { color: #6ee7b7; }
-
-  /* ── pipeline diagram ── */
-  .pipe { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
-  .pipe-row {
-    display: flex; align-items: stretch; gap: 18px;
-    padding: 20px 22px; background: var(--card2);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    position: relative;
-  }
-  .pipe-row + .pipe-row { margin-top: 30px; }
-  .pipe-row + .pipe-row::before {
-    content: '↓'; position: absolute; top: -25px; left: 38px;
-    color: var(--accent); font-size: 18px; font-weight: 700;
-  }
-  .pipe-tag {
-    flex-shrink: 0; width: 56px; height: 56px; border-radius: 12px;
-    display: grid; place-items: center; font-size: 24px;
-    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.28);
-  }
-  .pipe-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
-  .pipe-body h4 .mono { font-family:'SF Mono',ui-monospace,monospace; font-size:13px; color:var(--cyan); font-weight:600; margin-left:8px; }
-  .pipe-body p { font-size: 14px; color: var(--muted); }
-  .pipe-body .meta { margin-top: 8px; font-size: 12.5px; color: var(--faint); }
-
-  /* ── choice table ── */
-  .ctable { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 6px; }
-  .ctable th { text-align: left; padding: 12px 16px; color: var(--faint); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
-  .ctable td { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
-  .ctable tr:last-child td { border-bottom: none; }
-  .ctable td b { color: var(--text); }
-  .ctable .pick { color: var(--green); font-weight: 600; }
-
-  /* ══════════════════════════════════════════════════
-     PART 02 — 应用场景
-     ══════════════════════════════════════════════════ */
-  /* domain asset map */
-  .domain-map { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  @media (max-width: 860px) { .domain-map { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width: 540px) { .domain-map { grid-template-columns: 1fr; } }
-  .dom {
-    background: var(--card2); border: 1px solid var(--border); border-radius: 12px;
-    padding: 18px 18px; transition: border-color .2s, transform .2s;
-  }
-  .dom:hover { border-color: var(--c); transform: translateY(-2px); }
-  .dom .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .dom .name { font-size: 15.5px; font-weight: 700; display: flex; align-items: center; gap: 9px; }
-  .dom .name .dot { width: 9px; height: 9px; border-radius: 3px; background: var(--c); }
-  .dom .cnt { font-family:'SF Mono',ui-monospace,monospace; font-size: 12px; color: var(--faint); background: rgba(255,255,255,0.04); padding: 2px 8px; border-radius: 6px; }
-  .dom .files { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-  /* skill cards */
-  .skill { display: flex; flex-direction: column; }
-  .skill .badge {
-    align-self: flex-start; font-family:'SF Mono',ui-monospace,monospace;
-    font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 8px; margin-bottom: 16px;
-  }
-  .skill.s1 .badge { color: #93c5fd; background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); }
-  .skill.s2 .badge { color: #c4b5fd; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); }
-  .skill.s3 .badge { color: #67e8f9; background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.3); }
-  .skill h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
-  .skill .role { font-size: 13px; color: var(--faint); margin-bottom: 14px; }
-  .skill .desc { font-size: 14px; color: var(--muted); margin-bottom: 16px; flex-grow: 1; }
-  .skill .kv { font-size: 13px; border-top: 1px solid var(--border); padding-top: 14px; }
-  .skill .kv .row { display: flex; gap: 10px; margin-bottom: 7px; }
-  .skill .kv .row:last-child { margin-bottom: 0; }
-  .skill .kv .k { color: var(--faint); flex-shrink: 0; width: 56px; }
-  .skill .kv .v { color: var(--text); }
-  .skill .kv .v.hi { color: #6ee7b7; }
-
-  /* routing two-pass */
-  .pass { display: flex; gap: 18px; align-items: flex-start; }
-  .pass .col { flex: 1; }
-  .pass-card { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 22px; height: 100%; }
-  .pass-card .h { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .pass-card .h .n { font-family:'SF Mono',ui-monospace,monospace; font-size: 12px; font-weight:700; color: var(--accent); border:1px solid rgba(59,130,246,.3); border-radius:6px; padding:2px 8px; }
-  .pass-card .h .t { font-size: 16px; font-weight: 700; }
-  .pass-card ul { list-style: none; font-size: 14px; color: var(--muted); }
-  .pass-card li { padding-left: 20px; position: relative; margin-bottom: 9px; }
-  .pass-card li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
-  .pass-card li b { color: var(--text); }
-  @media (max-width: 760px) { .pass { flex-direction: column; } }
-
-  /* source tags */
-  .src-row { display: flex; gap: 16px; flex-wrap: wrap; }
-  .src-tag { flex: 1; min-width: 220px; background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .src-tag .lab { font-family:'SF Mono',ui-monospace,monospace; font-size: 14px; font-weight: 700; padding: 4px 10px; border-radius: 7px; display: inline-block; margin-bottom: 12px; }
-  .src-tag.t1 .lab { color:#6ee7b7; background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.3); }
-  .src-tag.t2 .lab { color:#c4b5fd; background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.3); }
-  .src-tag.t3 .lab { color:#fcd34d; background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3); }
-  .src-tag p { font-size: 14px; color: var(--muted); }
-
-  /* phase flow */
-  .phases { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-  @media (max-width: 860px) { .phases { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width: 480px) { .phases { grid-template-columns: 1fr; } }
-  .phase {
-    background: linear-gradient(180deg, var(--card) 0%, var(--card2) 100%);
-    border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative;
-  }
-  .phase .pn { font-family:'SF Mono',ui-monospace,monospace; font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
-  .phase h5 { font-size: 15.5px; font-weight: 700; margin-bottom: 8px; }
-  .phase p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-  .phase .tab { font-size: 11.5px; color: var(--faint); display: inline-flex; align-items: center; gap: 6px; }
-  .phase .slot { font-family:'SF Mono',ui-monospace,monospace; font-size: 11px; color: #93c5fd; background: rgba(59,130,246,.08); padding: 1px 7px; border-radius: 5px; }
-
-  /* tab output */
-  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 760px) { .twocol { grid-template-columns: 1fr; } }
-  .tabcard { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .tabcard .bar { padding: 14px 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
-  .tabcard.r .bar { background: rgba(59,130,246,.08); }
-  .tabcard.w .bar { background: rgba(139,92,246,.08); }
-  .tabcard .bar .who { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--faint); }
-  .tabcard .body { padding: 20px; font-size: 13.5px; color: var(--muted); }
-  .tabcard .body .li { padding: 7px 0; border-bottom: 1px dashed var(--border); display:flex; gap:10px; }
-  .tabcard .body .li:last-child { border-bottom: none; }
-  .tabcard .body .li .s { font-family:'SF Mono',ui-monospace,monospace; font-size:11px; color:#93c5fd; flex-shrink:0; }
-
-  /* ══════════════════════════════════════════════════
-     COMING SOON (实际测试结果占位)
-     ══════════════════════════════════════════════════ */
-  .soon {
-    text-align: center; padding: 56px 28px;
-    border: 1px dashed var(--border); border-radius: var(--radius);
-    background: var(--card2);
-  }
-  .soon .ico { font-size: 30px; margin-bottom: 14px; }
-  .soon h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .soon p { font-size: 14.5px; color: var(--muted); }
-
-  /* footer */
-  footer { padding: 48px 0 64px; text-align: center; border-top: 1px solid var(--border); }
-  footer p { font-size: 13px; color: var(--faint); }
-
-  .anchor { scroll-margin-top: 80px; }
+  footer { text-align: center; padding: 8px 0 0; color: var(--muted); font-size: 12px; }
+  .anchor { scroll-margin-top: 72px; }
 </style>
 </head>
 <body>
 
-<!-- ════════════ NAV ════════════ -->
-<nav class="topnav">
-  <div class="inner">
-    <div class="brand"><span class="logo">🧭</span> 业务知识库 · 价值汇报</div>
-    <div class="navlinks">
-      <a href="#intro">项目介绍</a>
-      <a href="#scenario">应用场景</a>
-      <a href="#result">测试结果</a>
-    </div>
-  </div>
-</nav>
-
-<!-- ════════════ HERO ════════════ -->
-<header class="hero">
-  <div class="container">
-    <div class="hero-badge"><span class="pulse"></span> 知识路由驱动 · 设计方案自动化</div>
-    <h1>让 18 篇业务文档<br>变成会<span class="grad">主动思考</span>的设计协作者</h1>
-    <p class="lead">设计师输入一句需求，AI 在同一段对话中按确认点推进 4 个阶段，产出一份带完整来源追溯的设计方案。</p>
-    <p class="sub">不是把文档喂给模型，而是重构知识的消费接口 —— 从「被动文档」到「主动认知」。</p>
-
-    <div class="statband">
-      <div class="cell"><div class="num">18</div><div class="lbl">结构化知识文档</div></div>
-      <div class="cell"><div class="num">6</div><div class="lbl">业务域覆盖</div></div>
-      <div class="cell"><div class="num">3</div><div class="lbl">场景化 Skill</div></div>
-      <div class="cell"><div class="num">4</div><div class="lbl">阶段填槽工作流</div></div>
-      <div class="cell"><div class="num">~300</div><div class="lbl">路由 token 开销</div></div>
-    </div>
-  </div>
+<header class="topbar">
+  <h1>业务知识库 <span class="tag">· 价值汇报</span></h1>
+  <nav>
+    <a href="#intro">项目介绍</a>
+    <a href="#scenario">应用场景</a>
+    <a href="#result">测试结果</a>
+  </nav>
 </header>
 
-<div class="sec-divider"></div>
+<div class="main">
 
-<!-- ════════════ PART 01 · 项目介绍 ════════════ -->
-<section id="intro" class="anchor">
-  <div class="container narrow">
-    <div class="sec-head">
-      <div class="sec-kicker"><span class="idx">PART 01</span> 项目介绍</div>
-      <h2>这是什么，以及为什么需要它</h2>
-      <p class="desc">一套业务知识库驱动的设计方案自动化系统。它让团队沉淀的业务流程知识，从「需要人去翻」的静态文档，升级为「AI 能精准调用」的认知资产。</p>
-    </div>
-
-    <div class="quote-block">
-      设计知识库的 AI 化，不是<b>「把文档喂给模型」</b>，而是<b>重构知识的消费接口</b> —— 让 Agent 用最小代价找到正确知识，并按统一协议消费它。
-    </div>
-
-    <!-- 三个断层 -->
-    <h3 style="font-size:21px;font-weight:700;margin:8px 0 6px;">核心矛盾：从「被动文档」到「主动认知」的三个断层</h3>
-    <p style="font-size:15px;color:var(--muted);margin-bottom:28px;">知识库已经是结构化、AI-ready 的 Markdown，但文档「能被读」不等于「会被用」。中间隔着三道坎。</p>
-
-    <div class="grid g3">
-      <div class="card gap-card">
-        <div class="gnum">01</div>
-        <h4>发现层缺失</h4>
-        <p>Agent 接到任务后，不知道该读哪篇文档。18 篇全塞进上下文会直接撑爆 context window。</p>
-        <div class="fix"><b>解法 ›</b> manifest.json 路由表，关键词精确命中 1–3 篇</div>
-      </div>
-      <div class="card gap-card">
-        <div class="gnum">02</div>
-        <h4>消费协议缺失</h4>
-        <p>读了之后怎么用？约束什么、参考什么、复用什么？没有统一规则，每次发挥都不一样。</p>
-        <div class="fix"><b>解法 ›</b> 三级来源标注 + 按章节分层读取</div>
-      </div>
-      <div class="card gap-card">
-        <div class="gnum">03</div>
-        <h4>工作流缺失</h4>
-        <p>从「接到需求」到「产出方案」的步骤编排不存在，无法保证产物形态稳定可交付。</p>
-        <div class="fix"><b>解法 ›</b> 4 阶段状态机 + 模板填槽</div>
-      </div>
-    </div>
-
-    <!-- 架构 pipeline -->
-    <h3 style="font-size:21px;font-weight:700;margin:52px 0 22px;">解法：知识路由驱动的四层架构</h3>
-    <div class="pipe">
-      <div class="pipe-row">
-        <div class="pipe-tag">💬</div>
-        <div class="pipe-body">
-          <h4>用户需求（自然语言）</h4>
-          <p>设计师一句话描述需求，无需指定读哪篇文档。例：「还借宝新增退款确认页」</p>
-        </div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-tag">🚪</div>
-        <div class="pipe-body">
-          <h4>Skill 入口 <span class="mono">.claude/commands/</span></h4>
-          <p>三个场景化 Skill：方案产出 / 方案评审 / 需求拆解，各自针对性优化 prompt。</p>
-          <div class="meta">仅 /biz-solution 带状态机，用 .biz-session.json 持久化 4 阶段进度</div>
-        </div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-tag">🧭</div>
-        <div class="pipe-body">
-          <h4>知识路由 <span class="mono">manifest.json</span></h4>
-          <p>约 300 token 的路由索引。第一遍关键词精确命中 1–3 篇；第二遍跨域扫描全部页面，找相似截图模式。</p>
-          <div class="meta">规则路由，不是 RAG 向量检索 —— 18 篇文档用向量库是杀鸡用牛刀</div>
-        </div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-tag">📚</div>
-        <div class="pipe-body">
-          <h4>知识文档 <span class="mono">ai/{域}/*.md</span></h4>
-          <p>按 sectionSchema 分章节读取，不读全文 —— 18 篇文档含大量视觉描述，一次读全会撑爆上下文。</p>
-          <div class="meta">P1 读目标/用户/指标，P2 读流程/页面，各阶段只取所需章节</div>
-        </div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-tag">📄</div>
-        <div class="pipe-body">
-          <h4>HTML 模板填槽 → 设计方案产物</h4>
-          <p>双 Tab 报告（汇报视图 + 工作台视图），每条决策标注三级来源，浏览器实时预览。</p>
-          <div class="meta">output/{简称}-report.html，可直接交付领导与设计师</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 技术选型 -->
-    <h3 style="font-size:21px;font-weight:700;margin:52px 0 14px;">关键决策：为什么是 Claude Code Skill，而不是 RAG</h3>
-    <div class="card" style="padding:8px 4px;">
-      <table class="ctable">
-        <thead><tr><th>决策点</th><th>选择</th><th>原因</th></tr></thead>
-        <tbody>
-          <tr><td>知识发现</td><td><b>manifest.json 结构化索引</b></td><td>比全文搜索快，几百 token 不吃 context</td></tr>
-          <tr><td>检索方式</td><td class="pick">规则路由 ✓</td><td>18 篇文档用向量检索是杀鸡用牛刀，规则命中更精确可控</td></tr>
-          <tr><td>知识粒度</td><td><b>按章节分层读取</b></td><td>每篇是完整业务域，按 sectionSchema 取所需章节，避免上下文爆炸</td></tr>
-          <tr><td>承载平台</td><td class="pick">Claude Code Skill ✓</td><td>团队已在用，天然支持文件读取 + 工具编排，零额外基础设施</td></tr>
-          <tr><td>视觉证据</td><td><b>URL 引用而非嵌入</b></td><td>截图已托管在 COS，Agent 按需 fetch，不污染上下文</td></tr>
-        </tbody>
-      </table>
+  <!-- ===== HERO ===== -->
+  <div class="card hero">
+    <span class="eyebrow">业务知识 · 设计生产力</span>
+    <h2>把散落的业务知识，<br>变成 AI 能<span>一句话调用</span>的设计生产力</h2>
+    <p>设计师说一句需求，AI 自动调取相关业务知识，几分钟产出一份带来源追溯的设计方案。</p>
+    <div class="metrics">
+      <div class="metric"><b>6</b><span>业务域覆盖</span></div>
+      <div class="metric"><b>18</b><span>流程知识文档</span></div>
+      <div class="metric"><b>1 句</b><span>需求即可启动</span></div>
+      <div class="metric"><b>3 种</b><span>调用场景</span></div>
     </div>
   </div>
-</section>
 
-<div class="sec-divider"></div>
+  <!-- ===== 01 项目介绍 ===== -->
+  <div class="card anchor" id="intro">
+    <div class="sec-num">01</div>
+    <div class="sec-title">项目介绍</div>
+    <div class="sec-lead">一句话说清这是什么，以及它解决了团队的什么老问题。</div>
 
-<!-- ════════════ PART 02 · 应用场景 ════════════ -->
-<section id="scenario" class="anchor">
-  <div class="container">
-    <div class="sec-head">
-      <div class="sec-kicker"><span class="idx">PART 02</span> 知识库应用场景</div>
-      <h2>知识库到底在什么时候、怎么起作用</h2>
-      <p class="desc">从设计师的真实工作场景出发：拿到需求 → 理解业务 → 产出方案 → 评审自检。知识库在每个环节都提供精确的认知支撑。</p>
+    <div class="statement">
+      我们把团队沉淀的业务流程知识，做成了一座 AI 能直接读懂、按需调用的知识库 —— 让业务经验不再只装在几个老同事脑子里。
     </div>
 
-    <!-- 资产盘点 -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">① 知识资产：6 个业务域，18 篇流程文档</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">每篇文档遵循统一 6 章结构（项目目标 / 目标用户 / 数据指标 / 页面识别总表 / 黄金流程 / 经验沉淀），含 COS 托管截图 + Figma 链接 + Gemini 视觉描述。</p>
-
-    <div class="domain-map" style="margin-bottom:64px;">
-      <div class="dom" style="--c:#3b82f6;">
-        <div class="top"><div class="name"><span class="dot"></span>平台</div><span class="cnt">2 篇</span></div>
-        <div class="files">注销流程 · 注册登录流程</div>
+    <h3 style="font-size:15px;font-weight:700;margin:34px 0 16px;">它解决三个真实痛点</h3>
+    <div class="cols3">
+      <div class="pain">
+        <div class="ico">1</div>
+        <h4>知识靠人传</h4>
+        <p>业务流程散在飞书文档和老同事脑子里，新人上手慢，关键经验难复制。</p>
       </div>
-      <div class="dom" style="--c:#ef4444;">
-        <div class="top"><div class="name"><span class="dot"></span>风控</div><span class="cnt">3 篇</span></div>
-        <div class="files">还借宝 · 还款减压 · 提额降息</div>
+      <div class="pain">
+        <div class="ico">2</div>
+        <h4>跨域看不懂</h4>
+        <p>设计师换条业务线，等于重新学一遍，海外、风控、消金各成一座孤岛。</p>
       </div>
-      <div class="dom" style="--c:#8b5cf6;">
-        <div class="top"><div class="name"><span class="dot"></span>消金</div><span class="cnt">2 篇</span></div>
-        <div class="files">用信流程 · 授信流程</div>
-      </div>
-      <div class="dom" style="--c:#10b981;">
-        <div class="top"><div class="name"><span class="dot"></span>支付还款</div><span class="cnt">1 篇</span></div>
-        <div class="files">还款流程（账单 / 收银台 / 渠道）</div>
-      </div>
-      <div class="dom" style="--c:#f59e0b;">
-        <div class="top"><div class="name"><span class="dot"></span>普惠</div><span class="cnt">2 篇</span></div>
-        <div class="files">授信 · 用信（复用消金）</div>
-      </div>
-      <div class="dom" style="--c:#06b6d4;">
-        <div class="top"><div class="name"><span class="dot"></span>海外</div><span class="cnt">8 篇</span></div>
-        <div class="files">墨西哥 / 印尼 × 登录·授信·用信·还款</div>
+      <div class="pain">
+        <div class="ico">3</div>
+        <h4>方案从零做</h4>
+        <p>每个新需求都从白纸开始，质量全看个人经验，容易重复踩同样的坑。</p>
       </div>
     </div>
 
-    <!-- 三大场景 Skill -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">② 三大应用场景：一个知识库，三种调用姿势</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">三个 Skill 共享同一套 manifest 路由和 HTML 模板，但各自针对不同工作场景优化 prompt，避免「万能 Skill」泛化失焦。</p>
-
-    <div class="grid g3" style="margin-bottom:64px;">
-      <div class="card skill s1">
-        <span class="badge">/biz-solution</span>
-        <h4>设计方案产出</h4>
-        <div class="role">主力 · 有状态机</div>
-        <div class="desc">设计师接到新需求，需要产出可交付方案。4 阶段渐进式产出，每阶段暂停确认。</div>
-        <div class="kv">
-          <div class="row"><span class="k">消费</span><span class="v">页面识别表 + 黄金流程 + 视觉证据</span></div>
-          <div class="row"><span class="k">产出</span><span class="v">双 Tab 设计方案 HTML</span></div>
-          <div class="row"><span class="k">价值</span><span class="v hi">不从零设计，站在已有业务知识上设计</span></div>
-        </div>
-      </div>
-      <div class="card skill s2">
-        <span class="badge">/biz-review</span>
-        <h4>设计方案评审</h4>
-        <div class="role">单次执行 · 无状态</div>
-        <div class="desc">方案完成后对照业务规则自检：哪些符合、哪些偏离、哪些缺失。</div>
-        <div class="kv">
-          <div class="row"><span class="k">消费</span><span class="v">业务规则 + 异常路径 + 经验沉淀</span></div>
-          <div class="row"><span class="k">产出</span><span class="v">一致性检查报告</span></div>
-          <div class="row"><span class="k">价值</span><span class="v hi">用「经验沉淀」防止重复踩坑</span></div>
-        </div>
-      </div>
-      <div class="card skill s3">
-        <span class="badge">/biz-analyze</span>
-        <h4>需求拆解分析</h4>
-        <div class="role">单次执行 · 无状态</div>
-        <div class="desc">拿到需求后理解业务背景与上下文，梳理关联流程、拆解任务。</div>
-        <div class="kv">
-          <div class="row"><span class="k">消费</span><span class="v">项目目标 + 指标 + 关联流程</span></div>
-          <div class="row"><span class="k">产出</span><span class="v">业务上下文分析 + 任务清单</span></div>
-          <div class="row"><span class="k">价值</span><span class="v hi">新人/跨域设计师快速理解业务全貌</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 路由两遍扫描 -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">③ 路由机制：两遍扫描，精确命中 + 跨域复用</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">这是知识库「主动认知」的核心 —— 既能找到正脸命中的文档，又能跨业务域借用相似的页面模式与流程原型。</p>
-
-    <div class="pass" style="margin-bottom:64px;">
-      <div class="col"><div class="pass-card">
-        <div class="h"><span class="n">PASS 1</span><span class="t">业务域精确命中</span></div>
+    <h3 style="font-size:15px;font-weight:700;margin:34px 0 16px;">带来的改变</h3>
+    <div class="ba">
+      <div class="side before">
+        <div class="lab">过去</div>
         <ul>
-          <li>匹配 <b>keywords + match + summary</b></li>
-          <li>选中 <b>1–3 篇</b>最相关文档</li>
-          <li>按 sectionSchema <b>只读对应章节</b></li>
-          <li>标注 <b>[知识库]</b> 来源（文档 + 章节）</li>
+          <li>翻文档、问同事，靠经验拼</li>
+          <li>跨业务线从头摸索</li>
+          <li>方案质量因人而异</li>
+          <li>说不清每个决策的依据</li>
         </ul>
-      </div></div>
-      <div class="col"><div class="pass-card">
-        <div class="h"><span class="n">PASS 2</span><span class="t">跨域相似匹配</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="side after">
+        <div class="lab">现在</div>
         <ul>
-          <li>扫描全部 <b>pages[]</b> 找相似截图模式</li>
-          <li>比对 7 种 <b>flowArchetype</b> 流程原型</li>
-          <li>提取截图 URL + 视觉描述 → <b>候选池</b></li>
-          <li>标注 <b>[跨域参考]</b> 来源（页面 + 链接）</li>
+          <li>一句需求，AI 自动调知识</li>
+          <li>任何业务域开箱即用</li>
+          <li>有知识库统一兜底</li>
+          <li>每条决策都标清来源</li>
         </ul>
-      </div></div>
-    </div>
-
-    <!-- 三级来源 -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">④ 来源可追溯：每条决策都标清「凭什么」</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">审阅者一眼就能区分：哪些是知识库铁证，哪些是跨域借鉴，哪些是 AI 在知识库空白处的自主推理 —— 决策透明，责任清晰。</p>
-
-    <div class="src-row" style="margin-bottom:64px;">
-      <div class="src-tag t1">
-        <span class="lab">[知识库]</span>
-        <p>精确命中文档，标注来源文档 + 具体章节。最高可信度，业务铁证。</p>
-      </div>
-      <div class="src-tag t2">
-        <span class="lab">[跨域参考]</span>
-        <p>跨业务域的相似页面截图 / 流程模式，标注来源文档 + 页面名 + 截图链接。</p>
-      </div>
-      <div class="src-tag t3">
-        <span class="lab">[推理]</span>
-        <p>知识库无覆盖，Agent 基于上下文独立推理。明确标记，提醒人工复核。</p>
-      </div>
-    </div>
-
-    <!-- 4 阶段工作流 -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">⑤ 工作流：4 阶段填槽，渐进可见、可暂停、可回退</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">像堆乐高 —— 先定义好汇报模板的每个槽位，再反推每阶段要产出什么来填满它。每阶段产物实时写入 HTML，浏览器即时预览，阶段间暂停人工确认。</p>
-
-    <div class="phases" style="margin-bottom:64px;">
-      <div class="phase">
-        <div class="pn">P1</div>
-        <h5>需求理解</h5>
-        <p>背景 / 目标 / 用户 / 指标 + 知识库覆盖度预检</p>
-        <div class="tab"><span class="slot">Slot A–D</span> 汇报 Tab</div>
-      </div>
-      <div class="phase">
-        <div class="pn">P2</div>
-        <h5>页面清单</h5>
-        <p>完整流程图 + 页面清单 + 流程同构分析</p>
-        <div class="tab"><span class="slot">Slot E–F</span> 汇报 Tab</div>
-      </div>
-      <div class="phase">
-        <div class="pn">P3</div>
-        <h5>逐页设计</h5>
-        <p>375×812 iOS 设计稿，matrix 平面画板布局</p>
-        <div class="tab"><span class="slot">Slot G</span> 工作台 Tab</div>
-      </div>
-      <div class="phase">
-        <div class="pn">P4</div>
-        <h5>整体评审</h5>
-        <p>决策摘要 + 四维自检 + 知识库证据汇总</p>
-        <div class="tab"><span class="slot">Slot H · I</span> 汇报 Tab</div>
-      </div>
-    </div>
-
-    <!-- 双 Tab 产物 -->
-    <h3 style="font-size:20px;font-weight:700;margin:0 0 8px;">⑥ 产物形态：一份报告，两类受众</h3>
-    <p style="font-size:14.5px;color:var(--muted);margin-bottom:24px;">同一个 HTML 文件，双 Tab 切换 —— 领导看汇报视图（结论与规划），设计师看工作台视图（设计稿与参考池）。</p>
-
-    <div class="twocol">
-      <div class="tabcard r">
-        <div class="bar">📊 汇报 Tab<span class="who">受众：领导</span></div>
-        <div class="body">
-          <div class="li"><span class="s">A–D</span><span>项目概览：背景 / 目标 / 用户 / 指标</span></div>
-          <div class="li"><span class="s">E–F</span><span>设计规划：完整流程图 + 页面清单</span></div>
-          <div class="li"><span class="s">H</span><span>设计验证：四维自检 + 待确认事项</span></div>
-          <div class="li"><span class="s">I-sum</span><span>命中汇总：知识库证据审计表</span></div>
-          <div class="li"><span class="s">SUM</span><span>决策摘要：结论 / 理由 / 复用边界 / 产物</span></div>
-        </div>
-      </div>
-      <div class="tabcard w">
-        <div class="bar">🎨 工作台 Tab<span class="who">受众：设计师</span></div>
-        <div class="body">
-          <div class="li"><span class="s">G</span><span>页面设计稿：375×812 iOS，matrix 并排对比</span></div>
-          <div class="li"><span class="s">I-gal</span><span>跨域参考候选池：相似截图，只追加不替换</span></div>
-          <div class="li"><span class="s">canvas</span><span>无限画布：pan / zoom 自由浏览</span></div>
-          <div class="li"><span class="s">note</span><span>每页附：来源 / 关键决策 / 复用边界</span></div>
-          <div class="li"><span class="s">flat</span><span>平面画板：不画设备壳，纯交付视图</span></div>
-        </div>
       </div>
     </div>
   </div>
-</section>
 
-<div class="sec-divider"></div>
+  <!-- ===== 02 应用场景 ===== -->
+  <div class="card anchor" id="scenario">
+    <div class="sec-num">02</div>
+    <div class="sec-title">知识库应用场景</div>
+    <div class="sec-lead">同一座知识库，覆盖设计师日常工作的三个高频环节。</div>
 
-<!-- ════════════ PART 03 · 实际测试结果（占位）════════════ -->
-<section id="result" class="anchor">
-  <div class="container narrow">
-    <div class="sec-head">
-      <div class="sec-kicker"><span class="idx">PART 03</span> 实际测试结果</div>
-      <h2>真实需求端到端验证</h2>
+    <div class="usage">
+      <div class="row">
+        <div class="head">
+          <div class="nm">产出方案</div>
+          <span class="badge main">主力场景</span>
+        </div>
+        <div class="desc">
+          <div class="when">接到新需求，要快速出一版设计方案时</div>
+          <div class="val">AI 不从零设计，而是<b>站在已有业务知识上设计</b>，自动给出页面清单、流程图和设计稿。</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="head">
+          <div class="nm">评审方案</div>
+          <span class="badge aux">辅助场景</span>
+        </div>
+        <div class="desc">
+          <div class="when">方案做完，要对照业务规则自检时</div>
+          <div class="val">用知识库里的<b>经验沉淀</b>逐项检查，指出哪些符合、哪些偏离、哪些漏了，防止重复踩坑。</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="head">
+          <div class="nm">拆解需求</div>
+          <span class="badge aux">辅助场景</span>
+        </div>
+        <div class="desc">
+          <div class="when">拿到需求，想先理清业务背景时</div>
+          <div class="val">帮新人或跨域设计师<b>快速看懂业务全貌</b>，梳理关联流程、盘点可复用的现成页面。</div>
+        </div>
+      </div>
     </div>
+
+    <h3 style="font-size:15px;font-weight:700;margin:36px 0 6px;">一个真实例子：从一句话到一份方案</h3>
+    <p style="font-size:13.5px;color:var(--sub);margin-bottom:18px;">以「还借宝新增退款确认页」为例，AI 在一段对话里走完全程。</p>
+    <div class="demo">
+      <div class="step">
+        <div class="k">设计师输入</div>
+        <div class="v">"还借宝新增退款确认页"<small>一句自然语言</small></div>
+      </div>
+      <div class="sep">→</div>
+      <div class="step accent">
+        <div class="k">知识库自动命中</div>
+        <div class="v">还借宝流程<small>调出相关页面与业务规则</small></div>
+      </div>
+      <div class="sep">→</div>
+      <div class="step">
+        <div class="k">几分钟后产出</div>
+        <div class="v">完整设计方案<small>流程图 + 设计稿 + 依据</small></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;margin:36px 0 6px;">为什么 AI 给的方案可信</h3>
+    <p style="font-size:13.5px;color:var(--sub);margin-bottom:6px;">每一条设计决策都标清"凭什么"，领导一眼看清哪些有据、哪些是 AI 自己的判断。</p>
+    <div class="trace">
+      <div class="t t1"><div class="lab">[ 知识库 ]</div><p>来自命中的业务文档，标注具体出处，最高可信度。</p></div>
+      <div class="t t2"><div class="lab">[ 跨域参考 ]</div><p>借鉴其他业务线的相似页面，标注参考来源。</p></div>
+      <div class="t t3"><div class="lab">[ 推理 ]</div><p>知识库未覆盖、AI 自主判断，明确标记待人工复核。</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 03 测试结果（占位） ===== -->
+  <div class="card anchor" id="result">
+    <div class="sec-num">03</div>
+    <div class="sec-title">实际测试结果</div>
+    <div class="sec-lead">真实需求端到端跑通的验证情况。</div>
     <div class="soon">
-      <div class="ico">🧪</div>
-      <h3>待补充</h3>
-      <p>这一部分将基于「还借宝退款确认页」「风控代还刷脸鉴权」等真实案例，<br>展示从需求输入到方案产出的完整验证结果与命中数据。确认前两部分后即可填充。</p>
+      <b>待补充</b>
+      <p>将以真实案例展示完整产出与命中数据，确认前两部分后填充。</p>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="container">
-    <p>业务知识库驱动的设计方案自动化 · 项目价值汇报 · 2026 Q2</p>
-  </div>
-</footer>
+  <footer>业务知识库 · 项目价值汇报 · 2026 Q2</footer>
+
+</div>
 
 </body>
 </html>
