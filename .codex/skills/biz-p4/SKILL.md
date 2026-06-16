@@ -34,7 +34,7 @@ P4 阶段：填充 Slot summary（决策摘要）+ Slot H（四维自检）+ 定
 - **业务规则一致性**：每条规则标注 [知识库] 来源
 - **UI 规范合规**：尺寸、组件、视觉一致性
 - **信息不足项**：知识库缺失的信息，需人工补充
-- 使用 `.check-item` 逐条呈现，成功项用绿色 `✓`，风险/缺口项用文字 `!` 或橙色标识；不要使用 emoji。
+- 使用 `.check-item` 逐条呈现，成功项用纯文本 `通过` 或 `.status.ok`，风险/缺口项用纯文本 `待确认` 或 `.status.warn`；不要使用 emoji 或符号图标。
 - 同步更新 `slot-gap-check`：若有信息不足项，取消 `display:none`，用 `.info-table` 列出 `决策点 | 知识库覆盖 | 缺口`，并在末尾追加 `.callout.warn`。
 
 定位 `id="slot-h"`，替换 placeholder。

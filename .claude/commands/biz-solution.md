@@ -241,6 +241,7 @@ flowchart TD
 - UI 规范合规
 - 信息不足项（知识库缺失，需人工补充）
 - 使用 `.check-item` 输出四维自检；如有缺口，同步显示 `slot-gap-check`，用表格列出决策点、覆盖情况、缺口
+- 自检状态使用纯文本 `通过` / `待确认` 或 `.status.ok` / `.status.warn`，不要使用 emoji 或符号图标
 
 **定稿 I-summary** — 替换 `slot-i-summary` 的 placeholder，写入：
 - 标题「知识库精确命中」，`.ledger` 表格：文档 → 章节 → Slot → 贡献
