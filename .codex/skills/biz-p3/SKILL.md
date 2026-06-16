@@ -33,8 +33,41 @@ P3 阶段：填充 Slot G（375×812 iOS 设计稿）。
 ### 4. 填充 Slot G（位于「工作台」Tab）
 
 所有页面的设计稿嵌入 `id="slot-g"`，替换 placeholder。
-推荐 matrix 布局：每页一列（node-card → phone-frame → evidence-shot），并排对比。
+推荐 matrix 布局：每页一列（node-card → phone-frame → evidence-note），并排对比。
 也可用 phone-grid > phone-wrap > phone-frame > phone-screen 结构。
+
+每一页必须包含三层结构：
+- `node-card`：页面名、NEW/REUSE 标签、一句话说明该页职责。
+- `phone-frame > phone-screen ps`：375×812 pt 平面画板。
+- `evidence-note`：至少三行，分别写「来源」「关键决策」「复用边界」，来源使用 [知识库]/[跨域参考]/[推理]。
+
+推荐结构：
+
+```html
+<div class="matrix">
+  <div class="flow-column">
+    <div class="node-card">
+      <strong>{页面名}</strong>
+      <p><span class="page-tag tag-new">NEW</span> {页面职责}</p>
+    </div>
+    <div class="down-arrow"></div>
+    <div class="phone-wrap">
+      <div class="phone-frame">
+        <div class="phone-screen ps">
+          <!-- 375x812 页面内容 -->
+        </div>
+      </div>
+    </div>
+    <div class="evidence-note">
+      <div><span>来源</span><p>[知识库] {文档/章节} + [跨域参考] {页面}</p></div>
+      <div><span>决策</span><p>{关键设计判断}</p></div>
+      <div><span>边界</span><p>{复用什么，不复用什么}</p></div>
+    </div>
+  </div>
+</div>
+```
+
+不得输出只有截图、只有空白卡片、只有描述没有画板的 Slot G。
 
 ### 5. I-gallery 追加（位于「工作台」Tab）
 

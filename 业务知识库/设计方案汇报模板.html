@@ -305,14 +305,26 @@
         <div class="section-num">02</div>
         <div class="section-title">设计规划</div>
 
+        <!--
+          [SLOT CONTRACT: E]
+          P2 必须按以下顺序填充：
+          1. <div class="flowchart-panel"> + <h4>完整流程</h4> + Mermaid 完整流程图
+          2. <h4>流程同构分析</h4> + .ledger 表格，对比知识库原型流程与本次需求流程
+          流程图需覆盖主链路、取消/返回、成功、失败、最终承接页；节点标注 REUSE/NEW。
+        -->
         <div class="slot" id="slot-e">
           <h3>设计流程</h3>
-          <div class="placeholder">待填充</div>
+          <div class="placeholder">待填充：完整流程图 + 流程同构分析</div>
         </div>
 
+        <!--
+          [SLOT CONTRACT: F]
+          页面清单必须使用 .info-table：
+          序号 | 页面 | 类型（.page-tag tag-new/tag-reuse） | 参考来源 | 状态（.status）
+        -->
         <div class="slot" id="slot-f">
           <h3>页面清单</h3>
-          <div class="placeholder">待填充</div>
+          <div class="placeholder">待填充：页面清单表格</div>
         </div>
 
         <div class="workspace-link">
@@ -326,11 +338,20 @@
         <div class="section-num">03</div>
         <div class="section-title">设计验证</div>
 
+        <!--
+          [SLOT CONTRACT: H]
+          P4 必须用 .check-item 输出四维自检：
+          流程完整性、业务规则一致性、UI 规范合规、信息不足项。
+        -->
         <div class="slot" id="slot-h">
           <h3>设计自检</h3>
-          <div class="placeholder">待填充</div>
+          <div class="placeholder">待填充：四维自检</div>
         </div>
 
+        <!--
+          [SLOT CONTRACT: GAP]
+          有知识库缺口时显示本槽位，使用 .info-table + .callout.warn。
+        -->
         <div class="slot" id="slot-gap-check" style="display:none;">
           <h3>待确认事项</h3>
           <div class="placeholder">待填充</div>
@@ -345,7 +366,15 @@
         <div class="slot" id="slot-i-summary">
           <h3>设计依据汇总</h3>
           <p style="font-size:13px;color:var(--sub);margin-bottom:12px;">本方案中每项设计决策的信息来源与推理过程。</p>
-          <div class="placeholder">待填充</div>
+          <!--
+            [SLOT CONTRACT: I-SUMMARY]
+            P4 必须分四组输出：
+            1. 知识库精确命中：.ledger（文档 | 章节 | Slot | 贡献）
+            2. 跨域参考采纳：.ledger（来源 | 页面 | 目标页 | 采纳? | 说明）
+            3. 推理清单：.ledger（Slot | 内容 | 推理原因）
+            4. 知识库建议补充/矛盾检测：.ledger 或 .callout.warn
+          -->
+          <div class="placeholder">待填充：知识库命中 + 跨域采纳 + 推理清单</div>
         </div>
       </div>
 
@@ -372,6 +401,13 @@
         <div class="canvas-inner">
 
           <!-- slot-g: 页面设计（P3 填充，matrix 或 phone-grid 布局） -->
+          <!--
+            [SLOT CONTRACT: G]
+            P3 推荐使用 .matrix，每页一列：
+            .flow-column > .node-card > .down-arrow > .phone-wrap > .phone-frame > .phone-screen.ps
+            每列再追加 .evidence-note，写清来源、关键决策、复用边界。
+            phone-frame 是平面画板，不是设备壳；不得添加黑色描边、设备圆角、刘海。
+          -->
           <section class="slot" id="slot-g" style="border:none;background:transparent;padding:0;">
             <div style="padding:60px;text-align:center;">
               <div class="placeholder">待填充：P3 阶段生成页面设计</div>

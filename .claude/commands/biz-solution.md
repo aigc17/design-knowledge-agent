@@ -137,7 +137,9 @@ $ARGUMENTS
 - 节点需标注 `REUSE` / `NEW`，复用页用绿色样式，新页面用蓝色样式，失败结果用橙色样式。
 - 分支边上写清触发动作，如「点击退款」「取消退款」「确认退款」「成功」「失败」。
 - 流程图后补充主链路流程节点（标注新增/复用）和分支/异常路径。
-- **流程同构分析**：将需求流程与知识库中同原型流程并排对比
+- **流程同构分析**：必须使用 `.ledger` 表格，将需求流程与知识库中同原型流程并排对比
+- 同构表列为：`环节 | 知识库原型流程 | 本次需求流程 | 映射说明`
+- 同构表必须覆盖入口、确认、鉴权/处理、结果、异常/返回；不适用环节写 `省略` 并说明原因
 
 推荐结构：
 
@@ -162,6 +164,15 @@ flowchart TD
   </div>
   <p class="flowchart-note">按本次需求替换节点名和分支，不要照抄示例。</p>
 </div>
+
+<h4 style="font-size:13px;color:var(--sub);margin:16px 0 8px;">流程同构分析</h4>
+<table class="ledger">
+  <thead><tr><th>环节</th><th>知识库原型流程</th><th>本次需求流程</th><th>映射说明</th></tr></thead>
+  <tbody>
+    <tr><td>入口</td><td>[知识库] 原有入口</td><td>[推理] 本次入口</td><td>说明正向/逆向关系</td></tr>
+    <tr><td>结果</td><td>[知识库] 原结果页</td><td>[跨域参考] 本次结果页</td><td>说明复用边界</td></tr>
+  </tbody>
+</table>
 ```
 
 **填充 Slot F**：
@@ -195,9 +206,12 @@ flowchart TD
 4. 附设计说明 + 来源标注
 
 **填充 Slot G**（位于「工作台」Tab）：
-- 推荐用 matrix 布局：每页一列（node-card → phone-frame → evidence-shot），并排对比
+- 推荐用 matrix 布局：每页一列（node-card → phone-frame → evidence-note），并排对比
 - 也可用 phone-grid 平铺展示
 - 每页附设计决策说明（[知识库]/[跨域参考]/[推理]）
+- 每页必须包含 `node-card`、`phone-frame > phone-screen ps`、`evidence-note` 三层结构
+- `evidence-note` 至少包含「来源」「关键决策」「复用边界」
+- phone-frame 是平面画板，不是设备壳；不得添加黑色描边、设备圆角、刘海/外壳装饰
 
 **I-gallery 追加**（位于「工作台」Tab）：
 - 设计过程中新引用的跨域截图追加到 I-gallery
@@ -226,13 +240,14 @@ flowchart TD
 - 业务规则一致性（每条标注 [知识库]）
 - UI 规范合规
 - 信息不足项（知识库缺失，需人工补充）
+- 使用 `.check-item` 输出四维自检；如有缺口，同步显示 `slot-gap-check`，用表格列出决策点、覆盖情况、缺口
 
 **定稿 I-summary** — 替换 `slot-i-summary` 的 placeholder，写入：
-- [知识库] 精确命中汇总表：文档 → 章节 → Slot → 贡献类型
-- [跨域参考] 跨域参考汇总表：文档 → 页面 → 截图 → 设计页 → adopted? → 参考了什么
-- [推理] 纯推理清单：Slot → 内容 → 推理原因
-- 知识库建议：知识库应补充的内容（未覆盖的决策点）
-- 矛盾检测：如发现知识库内不同文档间的数据矛盾，标红提醒
+- 标题「知识库精确命中」，`.ledger` 表格：文档 → 章节 → Slot → 贡献
+- 标题「跨域参考采纳」，`.ledger` 表格：来源 → 页面 → 目标页 → 采纳? → 说明
+- 标题「推理清单」，`.ledger` 表格：Slot → 内容 → 推理原因
+- 标题「知识库建议补充」，`.ledger` 表格：缺失项 → 影响
+- 矛盾检测：如发现知识库内不同文档间的数据矛盾，用 `.callout.warn` 提醒；若没有则写明未发现关键矛盾
 
 **注意**：I-summary 只操作 `id="slot-i-summary"`，不触碰 `id="slot-i-gallery"`。
 
