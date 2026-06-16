@@ -49,11 +49,8 @@
 
   /* ---- Section head ---- */
   .sec-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
-  .sec-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-  .sec-lead { font-size: 15px; color: var(--sub); margin-bottom: 28px; }
-
-  /* ---- One-liner callout ---- */
-  .statement { padding: 20px 24px; background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 17px; font-weight: 600; color: #1e3a8a; line-height: 1.55; }
+  .sec-title { font-size: 22px; font-weight: 700; margin-bottom: 22px; }
+  .def { font-size: 16px; color: var(--text); line-height: 1.75; }
 
   /* ---- Pain cards ---- */
   .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -155,28 +152,25 @@
   <div class="card anchor" id="intro">
     <div class="sec-num">01</div>
     <div class="sec-title">项目介绍</div>
-    <div class="sec-lead">一句话说清这是什么，以及它解决了团队的什么老问题。</div>
 
-    <div class="statement">
-      我们把团队沉淀的业务流程知识，做成了一座 AI 能直接读懂、按需调用的知识库 —— 让业务经验不再只装在几个老同事脑子里。
-    </div>
+    <p class="def">业务知识库把各业务线的核心流程知识做了统一整理和结构化沉淀，让 AI 能够直接读取和调用。设计师提出需求后，AI 基于这些知识理解业务、复用已有页面、产出设计方案，不必每次从零开始。</p>
 
-    <h3 style="font-size:15px;font-weight:700;margin:34px 0 16px;">它解决三个真实痛点</h3>
+    <h3 style="font-size:15px;font-weight:700;margin:32px 0 16px;">解决三个实际问题</h3>
     <div class="cols3">
       <div class="pain">
         <div class="ico">1</div>
-        <h4>知识靠人传</h4>
-        <p>业务流程散在飞书文档和老同事脑子里，新人上手慢，关键经验难复制。</p>
+        <h4>知识分散</h4>
+        <p>流程知识散落在各处文档，缺乏统一结构，查找和复用效率低。</p>
       </div>
       <div class="pain">
         <div class="ico">2</div>
-        <h4>跨域看不懂</h4>
-        <p>设计师换条业务线，等于重新学一遍，海外、风控、消金各成一座孤岛。</p>
+        <h4>跨域门槛高</h4>
+        <p>换一条业务线就要重新熟悉，海外、风控、消金彼此独立。</p>
       </div>
       <div class="pain">
         <div class="ico">3</div>
-        <h4>方案从零做</h4>
-        <p>每个新需求都从白纸开始，质量全看个人经验，容易重复踩同样的坑。</p>
+        <h4>方案缺依据</h4>
+        <p>新需求多从零开始，质量依赖个人经验，容易遗漏已有规范。</p>
       </div>
     </div>
 
@@ -185,10 +179,10 @@
       <div class="side before">
         <div class="lab">过去</div>
         <ul>
-          <li>翻文档、问同事，靠经验拼</li>
+          <li>翻文档、反复查找确认</li>
           <li>跨业务线从头摸索</li>
           <li>方案质量因人而异</li>
-          <li>说不清每个决策的依据</li>
+          <li>决策依据难追溯</li>
         </ul>
       </div>
       <div class="arrow">→</div>
@@ -208,7 +202,6 @@
   <div class="card anchor" id="scenario">
     <div class="sec-num">02</div>
     <div class="sec-title">知识库应用场景</div>
-    <div class="sec-lead">同一座知识库，覆盖设计师日常工作的三个高频环节。</div>
 
     <div class="usage">
       <div class="row">
@@ -243,8 +236,7 @@
       </div>
     </div>
 
-    <h3 style="font-size:15px;font-weight:700;margin:36px 0 6px;">一个真实例子：从一句话到一份方案</h3>
-    <p style="font-size:13.5px;color:var(--sub);margin-bottom:18px;">以「还借宝新增退款确认页」为例，AI 在一段对话里走完全程。</p>
+    <h3 style="font-size:15px;font-weight:700;margin:36px 0 16px;">从一句需求到一份方案</h3>
     <div class="demo">
       <div class="step">
         <div class="k">设计师输入</div>
@@ -275,10 +267,88 @@
   <div class="card anchor" id="result">
     <div class="sec-num">03</div>
     <div class="sec-title">实际测试结果</div>
-    <div class="sec-lead">真实需求端到端跑通的验证情况。</div>
-    <div class="soon">
-      <b>待补充</b>
-      <p>将以真实案例展示完整产出与命中数据，确认前两部分后填充。</p>
+    <div class="sec-lead">基于真实案例「还借宝新增退款确认页」，采用 /biz-solution 工作流端到端跑通的验证数据。</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; margin-bottom: 24px;">
+      <div style="background: var(--green-soft); border: 1px solid #a7f3d0; border-radius: var(--radius); padding: 24px;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">产出耗时</div>
+        <div style="font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 4px;">~5 <span>分钟</span></div>
+        <div style="font-size: 13px; color: var(--sub);">在人机协同下完成 P1 到 P4 全阶段。从零手写文档和设计预计需 1-2 小时。</div>
+      </div>
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius); padding: 24px;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">知识命中情况</div>
+        <div style="font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 4px;">精准路由</div>
+        <div style="font-size: 13px; color: var(--sub);">完美索引 `ai/风控/03-风控还借宝流程.md` 知识库文档。</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;margin:32px 0 16px;">工作流四阶段产出详情</h3>
+    
+    <div class="usage">
+      <div class="row">
+        <div class="head">
+          <div class="nm">P1: 需求理解</div>
+          <span class="badge main">耗时 ~1 分钟</span>
+        </div>
+        <div class="desc">
+          <div class="when">填充 Slot A-D，建立业务全景认知</div>
+          <div class="val">
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 准确识别目标用户：可复借与逾期不可复借用户。</li>
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 基于知识库推导业务目标：提升还借宝转化率。</li>
+              <li style="padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 完整抽取对应的数据指标体系及跨域视觉参考。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="head">
+          <div class="nm">P2: 页面清单</div>
+          <span class="badge main">耗时 ~1 分钟</span>
+        </div>
+        <div class="desc">
+          <div class="when">填充 Slot E-F，锁定整体工作量</div>
+          <div class="val">
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 发掘组件复用价值：识别出可复用的"还借宝购买页"。</li>
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 输出结构化设计流程：包含退款成功和退还失败的分支路径。</li>
+              <li style="padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 生成完整待设计界面名录及其上下游结构。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="head">
+          <div class="nm">P3: 逐页设计</div>
+          <span class="badge main">耗时 ~2 分钟</span>
+        </div>
+        <div class="desc">
+          <div class="when">填充 Slot G，基于 375×812 纯画布</div>
+          <div class="val">
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 依据 iOS 尺寸完成无设备壳排版，提供结构化 UI 草稿。</li>
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 设计布局紧密围绕知识资产：鉴权弹窗卡片与底部操作按结构呈现。</li>
+              <li style="padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 期间执行了一次自然语言迭代："调整底部按钮为取消/确定"。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="head">
+          <div class="nm">P4: 全局评审</div>
+          <span class="badge main">耗时 ~1 分钟</span>
+        </div>
+        <div class="desc">
+          <div class="when">填充 Slot H, summary, 落实 I</div>
+          <div class="val">
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 提炼关键确认缺口：退款的财务对账策略需由开发确认。</li>
+              <li style="margin-bottom: 6px; padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 通过 AI-知识对齐审核，标定设计偏离风险。</li>
+              <li style="padding-left: 20px; position: relative;"><b style="color:var(--accent); position: absolute; left: 0;">✓</b> 输出分为"工作台版"与"汇报版"视图的高聚合方案源码。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
