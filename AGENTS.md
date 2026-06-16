@@ -32,3 +32,4 @@
 5. 设计尺寸 iOS 375 x 812 pt
 6. 工作台 Tab 的 slot-g 推荐 matrix 布局（每页一列）
 7. Codex 使用 `biz-solution` 时不要让用户手动调用 `biz-p1` ~ `biz-p4`；主入口根据 phase 执行当前阶段，阶段结束等待用户确认后续跑
+8. 新项目启动时必须隔离运行态：只用 `.biz-session.json` 判断续跑，不用 `output/` 里的历史 HTML；用户确认新建后先删除旧 session
