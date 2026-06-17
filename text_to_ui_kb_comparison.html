@@ -29,12 +29,17 @@
             position: relative;
         }
         .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+        /* 分期乐品牌色 */
+        .lx-blue { color: #4C84FF; }
+        .lx-blue-bg { background-color: #4C84FF; }
+        .lx-blue-soft { background-color: #EBF1FF; }
+        .lx-blue-border { border-color: #C7D9FF; }
     </style>
 </head>
 <body>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 1 : 核心结论 + 真实检索对比                            -->
+    <!-- SLIDE 1 : 核心结论 + 真实检索对比（授信案例）                -->
     <!-- ============================================================ -->
     <div class="slide-container">
         <!-- Header -->
@@ -43,52 +48,52 @@
                 <h1 class="text-[32px] font-extrabold text-gray-900 tracking-tight">知识库的核心价值：让 AI 真正“懂业务”</h1>
                 <span class="text-sm text-gray-400 font-medium">真实检索实测 · 分期乐业务知识库</span>
             </div>
-            <p class="text-lg text-gray-500 mt-2">同一句需求，通用大模型只能<span class="text-red-500 font-semibold">按字面猜</span>，知识库能<span class="text-green-600 font-semibold">精准检索到真实业务资产</span></p>
+            <p class="text-lg text-gray-500 mt-2">同一句需求，通用大模型只能<span class="text-gray-700 font-semibold">给个空壳表单</span>，知识库能<span class="lx-blue font-semibold">检索出完整业务链路与规则</span></p>
         </header>
 
         <!-- 需求场景 -->
         <div class="px-12 py-3.5 bg-gray-900 flex items-center space-x-4">
             <span class="bg-white text-gray-900 px-3 py-1 rounded text-sm font-bold">设计需求</span>
-            <span class="text-white text-lg font-medium mono">“帮我设计【还借宝购买页】”</span>
-            <span class="text-gray-400 text-sm">— “还借宝”是分期乐自有业务词，通用模型从未见过</span>
+            <span class="text-white text-lg font-medium mono">“帮我设计一个【授信额度申请页】”</span>
+            <span class="text-gray-400 text-sm">— 最常见的金融业务场景</span>
         </div>
 
         <!-- content -->
         <div class="flex-1 flex px-12 py-7 space-x-7">
 
             <!-- ===== Left: 通用大模型 ===== -->
-            <div class="flex-1 flex flex-col border border-red-200 rounded-xl overflow-hidden bg-red-50/30">
-                <div class="bg-red-50 px-5 py-3 border-b border-red-100 flex items-center justify-between">
-                    <span class="text-red-700 font-bold text-[15px]">通用大模型（无知识库）</span>
-                    <span class="text-red-400 text-xs font-medium">凭字面语义联想</span>
+            <div class="flex-1 flex flex-col border border-gray-200 rounded-xl overflow-hidden bg-gray-50/50">
+                <div class="bg-gray-100 px-5 py-3 border-b border-gray-200 flex items-center justify-between">
+                    <span class="text-gray-700 font-bold text-[15px]">通用大模型（无知识库）</span>
+                    <span class="text-gray-400 text-xs font-medium">凭通用常识猜</span>
                 </div>
                 <div class="px-5 pt-4 pb-5 flex-1 flex flex-col">
-                    <div class="text-xs text-gray-400 mb-2 font-semibold">模型的理解 →</div>
+                    <div class="text-xs text-gray-400 mb-2 font-semibold">模型的产出 →</div>
                     <div class="bg-white rounded-lg border border-gray-200 p-4 mb-4">
-                        <div class="text-sm text-gray-700 mb-3">把“还借宝”拆成 <span class="mono bg-gray-100 px-1.5 py-0.5 rounded">还款</span> + <span class="mono bg-gray-100 px-1.5 py-0.5 rounded">借款</span>，猜成一个普通还款页：</div>
-                        <ul class="text-sm text-gray-500 space-y-1.5">
-                            <li class="flex justify-between"><span>待还金额</span><span class="text-gray-700">¥ 12,050</span></li>
-                            <li class="flex justify-between"><span>积分余额 <span class="text-red-400 text-xs">(臆造)</span></span><span>5,000</span></li>
-                            <li class="flex justify-between"><span>VIP 等级 <span class="text-red-400 text-xs">(臆造)</span></span><span>黄金会员</span></li>
+                        <div class="text-sm text-gray-700 mb-3">理解成一个<span class="font-semibold text-gray-900">通用申请表单</span>，一页提交完事：</div>
+                        <ul class="text-sm text-gray-500 space-y-2">
+                            <li class="flex justify-between"><span>真实姓名</span><span class="text-gray-300">请输入</span></li>
+                            <li class="flex justify-between"><span>手机号码</span><span class="text-gray-300">请输入</span></li>
+                            <li class="flex justify-between"><span>申请额度</span><span class="text-gray-300">请输入</span></li>
                         </ul>
-                        <button class="w-full bg-gray-300 text-white rounded py-2 text-sm font-medium mt-3">立即还款</button>
+                        <button class="w-full bg-gray-300 text-white rounded py-2 text-sm font-medium mt-3">提交申请</button>
                     </div>
                     <div class="mt-auto">
-                        <div class="text-sm font-bold text-red-700 mb-2">结果：业务全错，不可用</div>
+                        <div class="text-sm font-bold text-gray-700 mb-2">结果：业务链路缺失，不可用</div>
                         <ul class="text-[13px] text-gray-600 space-y-1.5 leading-snug">
-                            <li>· 不知道还借宝 = <span class="text-gray-800 font-medium">买超市卡恢复额度的付费权益</span></li>
-                            <li>· 凭空臆造“积分 / VIP”等不存在的字段</li>
-                            <li>· 设计师需推倒重做 → <span class="text-red-600 font-medium">沦为废稿</span></li>
+                            <li>· 不知道授信要走 <span class="text-gray-900 font-medium">实名认证 + OCR + 刷脸 + 审批</span></li>
+                            <li>· 不知道<span class="text-gray-900 font-medium">三类用户</span>（新户/已实名/已刷脸）走不同路径</li>
+                            <li>· 缺审批等待、授信结果等关键页 → <span class="text-gray-800 font-medium">推倒重做</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- ===== Right: 知识库检索 ===== -->
-            <div class="flex-1 flex flex-col border-2 border-green-300 rounded-xl overflow-hidden bg-white shadow-[0_0_18px_rgba(34,197,94,0.12)]">
-                <div class="bg-green-500 px-5 py-3 flex items-center justify-between">
+            <div class="flex-1 flex flex-col border-2 rounded-xl overflow-hidden bg-white lx-blue-border" style="box-shadow:0 0 18px rgba(76,132,255,0.14)">
+                <div class="lx-blue-bg px-5 py-3 flex items-center justify-between">
                     <span class="text-white font-bold text-[15px]">分期乐业务知识库（检索增强）</span>
-                    <span class="text-green-50 text-xs font-medium">真实命中</span>
+                    <span class="text-blue-50 text-xs font-medium">真实命中</span>
                 </div>
                 <div class="px-5 pt-4 pb-5 flex-1 flex flex-col">
                     <!-- 检索链路 -->
@@ -97,35 +102,35 @@
                         <span class="text-gray-300">→</span>
                         <span class="bg-gray-100 px-2 py-1 rounded">路由 18 篇</span>
                         <span class="text-gray-300">→</span>
-                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded">精确命中 1 篇</span>
+                        <span class="lx-blue-soft lx-blue px-2 py-1 rounded">命中「消金授信流程」</span>
                     </div>
                     <!-- 命中卡片 -->
-                    <div class="bg-green-50/60 rounded-lg border border-green-200 p-4 mb-3">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-[15px] font-bold text-gray-900">📄 风控还借宝流程</span>
-                            <span class="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded mono">risk-hjb</span>
+                    <div class="lx-blue-soft rounded-lg border lx-blue-border p-4 mb-3">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[15px] font-bold text-gray-900">📄 消金授信流程</span>
+                            <span class="text-xs lx-blue lx-blue-soft px-2 py-0.5 rounded mono" style="background:#fff">consumer-credit</span>
                         </div>
-                        <div class="text-xs text-gray-500 mb-3">负责人 @夏梓翔 · 来源可追溯至飞书 / Figma</div>
-                        <div class="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[13px] text-gray-700">
-                            <div class="col-span-2 text-xs text-gray-400 font-semibold">取出真实业务规则 →</div>
-                            <div>· 60元买超市卡</div>
-                            <div>· 100% 恢复额度</div>
-                            <div>· 借款被拒 5 倍超市金赔付</div>
-                            <div>· 本金 / 利息 / 服务费</div>
+                        <div class="text-xs text-gray-500 mb-3">负责人 @王竞仪 · 来源可追溯至飞书原文 / Figma 设计稿</div>
+                        <!-- 真实8步链路 -->
+                        <div class="text-xs text-gray-400 font-semibold mb-1.5">取出真实业务链路（8 步）→</div>
+                        <div class="flex flex-wrap items-center gap-x-1 gap-y-1.5 text-[11px]">
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">激活额度</span><span class="text-gray-300">›</span>
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">OCR认证</span><span class="text-gray-300">›</span>
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">扫描身份</span><span class="text-gray-300">›</span>
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">识别成功</span><span class="text-gray-300">›</span>
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">刷脸</span><span class="text-gray-300">›</span>
+                            <span class="bg-white border lx-blue-border lx-blue px-1.5 py-0.5 rounded">审批中</span><span class="text-gray-300">›</span>
+                            <span class="lx-blue-bg text-white px-1.5 py-0.5 rounded">授信成功</span>
                         </div>
                     </div>
-                    <!-- 真实页面清单 -->
-                    <div class="text-xs text-gray-400 font-semibold mb-1.5">取出真实页面清单（8 个）→</div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">购买页</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">交易鉴权</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">购买成功</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">购买失败</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">还款状态</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">借款状态</span>
-                        <span class="text-[11px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded">订单记录</span>
-                    </div>
-                    <div class="mt-auto text-sm font-bold text-green-700">结果：业务准确，研发可直接对接 ✓</div>
+                    <!-- 真实业务规则 -->
+                    <div class="text-xs text-gray-400 font-semibold mb-1.5">取出真实业务规则 + 经验数据 →</div>
+                    <ul class="text-[13px] text-gray-700 space-y-1 mb-3">
+                        <li>· 三类用户分流：新户走全程，已实名<span class="font-medium">跳过证件直接刷脸</span></li>
+                        <li>· 实名认证 ≠ 人脸识别，是两个独立核验步骤</li>
+                        <li>· 沉淀经验：<span class="lx-blue font-semibold">额度牵引使身份信息提交率 +20%</span></li>
+                    </ul>
+                    <div class="mt-auto text-sm font-bold lx-blue">结果：业务准确，研发可直接对接 ✓</div>
                 </div>
             </div>
         </div>
@@ -138,7 +143,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 2 : 检索机制是怎么做到的（给老板的能力说明）          -->
+    <!-- SLIDE 2 : 检索机制（给老板的能力说明）                        -->
     <!-- ============================================================ -->
     <div class="slide-container">
         <header class="pt-9 px-12 pb-5 border-b border-gray-100">
@@ -156,11 +161,12 @@
                     <span class="w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold">1</span>
                     <span class="text-lg font-bold text-gray-900">路由定位</span>
                 </div>
-                <p class="text-sm text-gray-600 leading-relaxed mb-4">用一份 ~300 字的索引（manifest），按关键词 + 流程原型，从 18 篇里锁定 1–3 篇相关文档。</p>
+                <p class="text-sm text-gray-600 leading-relaxed mb-4">用一份 ~300 字的索引（manifest），按关键词 + 流程原型，从 18 篇里锁定相关文档并按相关度排序。</p>
                 <div class="bg-white rounded-lg border border-gray-200 p-3 text-xs mono text-gray-600 leading-relaxed">
-                    <span class="text-gray-400">query:</span> 还借宝购买页<br>
+                    <span class="text-gray-400">query:</span> 授信额度申请页<br>
                     <span class="text-gray-400">scan :</span> 18 docs<br>
-                    <span class="text-green-600">hit  :</span> risk-hjb (关键词“还借宝”)
+                    <span class="lx-blue">hit  :</span> consumer-credit（Top1）<br>
+                    <span class="text-gray-400">type :</span> 身份认证流程原型
                 </div>
                 <div class="mt-auto pt-4 text-xs text-gray-500">价值：不撑爆上下文，检索快且省钱</div>
             </div>
@@ -184,14 +190,14 @@
             <!-- Step 3 -->
             <div class="flex-1 flex flex-col bg-gray-50 rounded-xl border border-gray-200 p-6">
                 <div class="flex items-center space-x-3 mb-4">
-                    <span class="w-9 h-9 rounded-full bg-green-500 text-white flex items-center justify-center font-bold">3</span>
+                    <span class="w-9 h-9 rounded-full lx-blue-bg text-white flex items-center justify-center font-bold">3</span>
                     <span class="text-lg font-bold text-gray-900">来源可追溯</span>
                 </div>
                 <p class="text-sm text-gray-600 leading-relaxed mb-4">每条设计内容标注来源等级，可一路回溯到飞书原文与 Figma 设计稿，杜绝“AI 瞎编”。</p>
                 <div class="space-y-2">
-                    <div class="bg-white rounded-lg border border-green-200 px-3 py-2 text-xs"><span class="text-green-700 font-bold mono">[知识库]</span> <span class="text-gray-600">精确命中文档 + 章节</span></div>
-                    <div class="bg-white rounded-lg border border-blue-200 px-3 py-2 text-xs"><span class="text-blue-700 font-bold mono">[跨域参考]</span> <span class="text-gray-600">相似业务页面截图</span></div>
-                    <div class="bg-white rounded-lg border border-gray-200 px-3 py-2 text-xs"><span class="text-gray-500 font-bold mono">[推理]</span> <span class="text-gray-600">知识库未覆盖，AI 补充</span></div>
+                    <div class="bg-white rounded-lg border lx-blue-border px-3 py-2 text-xs"><span class="lx-blue font-bold mono">[知识库]</span> <span class="text-gray-600">精确命中文档 + 章节</span></div>
+                    <div class="bg-white rounded-lg border border-gray-300 px-3 py-2 text-xs"><span class="text-gray-700 font-bold mono">[跨域参考]</span> <span class="text-gray-600">相似业务页面截图</span></div>
+                    <div class="bg-white rounded-lg border border-gray-200 px-3 py-2 text-xs"><span class="text-gray-400 font-bold mono">[推理]</span> <span class="text-gray-600">知识库未覆盖，AI 补充</span></div>
                 </div>
                 <div class="mt-auto pt-4 text-xs text-gray-500">价值：每个结论都查得到出处，可信可审</div>
             </div>
@@ -199,7 +205,7 @@
 
         <footer class="bg-gray-900 text-gray-300 py-3 px-12 text-sm flex justify-between items-center">
             <span class="text-gray-500">分期乐设计研发效能 · 内部资料</span>
-            <span class="font-medium">沉淀一次业务知识，全团队 AI 设计长期复用</span>
+            <span class="font-medium">同一流程原型可跨 6 大业务域复用，沉淀一次长期受益</span>
         </footer>
     </div>
 
