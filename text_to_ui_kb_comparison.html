@@ -209,5 +209,181 @@
         </footer>
     </div>
 
+    <!-- ============================================================ -->
+    <!-- SLIDE 3 : 命中流程 + 对应界面（授信 8 步真实页面）           -->
+    <!-- ============================================================ -->
+    <div class="slide-container">
+        <header class="pt-9 px-12 pb-4 border-b border-gray-100">
+            <div class="flex items-baseline justify-between">
+                <h1 class="text-[32px] font-extrabold text-gray-900 tracking-tight">命中流程的真实界面：授信 8 步链路</h1>
+                <span class="text-sm mono lx-blue font-semibold">[知识库] 消金授信流程 · 来源 Figma 设计稿</span>
+            </div>
+            <p class="text-base text-gray-500 mt-1.5">检索命中后，AI 拿到的不是文字，而是这一整套有顺序、有规则的真实页面资产</p>
+        </header>
+
+        <!-- 8 部手机平面稿横排 -->
+        <div class="flex-1 flex items-stretch px-10 py-6 gap-2.5">
+
+            <!-- 1 激活额度 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">① 激活额度</div>
+                <div class="w-full rounded-[10px] border border-gray-200 overflow-hidden flex flex-col" style="height:330px;background:linear-gradient(#EBF1FF,#fff)">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹ 激活额度</span><span>9:41</span></div>
+                    <div class="px-2.5 pt-2">
+                        <div class="text-[10px] font-bold text-gray-900 leading-tight">完成实名认证<br>最高获得 <span style="color:#FF4D6A">20万</span></div>
+                        <div class="mt-2 lx-blue-soft rounded px-1.5 py-1 text-[7px] lx-blue leading-tight">🛡 资料加密保护，仅用于核验身份</div>
+                    </div>
+                    <div class="px-2.5 mt-2.5 space-y-2">
+                        <div class="bg-white rounded border border-gray-200 px-1.5 py-1.5 text-[8px] text-gray-400 flex justify-between items-center">真实姓名<span class="lx-blue text-[7px]">📷识别</span></div>
+                        <div class="bg-white rounded border border-gray-200 px-1.5 py-1.5 text-[8px] text-gray-400">身份证号</div>
+                    </div>
+                    <div class="mt-auto px-2.5 pb-3">
+                        <div class="text-[7px] text-gray-400 mb-1.5">☑ 已阅读并同意 <span class="lx-blue">服务协议</span></div>
+                        <div class="lx-blue-bg text-white text-center rounded py-1.5 text-[9px] font-bold">下一步</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 OCR认证 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">② OCR 认证</div>
+                <div class="w-full rounded-[10px] border border-gray-200 overflow-hidden flex flex-col bg-white" style="height:330px">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹ 激活额度</span><span>9:41</span></div>
+                    <div class="px-2.5 pt-1 text-[10px] font-bold text-gray-900 leading-tight">完成实名认证<br>最高获得 <span style="color:#FF4D6A">20万</span></div>
+                    <div class="px-2.5 mt-3 space-y-2.5">
+                        <div class="rounded border-2 border-dashed lx-blue-border lx-blue-soft flex flex-col items-center justify-center text-[7px] lx-blue" style="height:60px">📷<span class="text-gray-500 mt-1">人像面</span></div>
+                        <div class="rounded border-2 border-dashed lx-blue-border lx-blue-soft flex flex-col items-center justify-center text-[7px] lx-blue" style="height:60px">📷<span class="text-gray-500 mt-1">国徽面</span></div>
+                    </div>
+                    <div class="mt-auto px-2.5 pb-3">
+                        <div class="text-[7px] text-gray-400 mb-1.5">☑ 已阅读并同意 <span class="lx-blue">服务协议</span></div>
+                        <div class="text-white text-center rounded py-1.5 text-[9px] font-bold" style="background:#B3C5FF">下一步</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 扫描身份 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">③ 扫描身份</div>
+                <div class="w-full rounded-[10px] overflow-hidden flex flex-col items-center" style="height:330px;background:#1A1A1A">
+                    <div class="w-full px-2 pt-2 pb-1 text-[8px] text-white/70 flex justify-between"><span>‹</span><span>9:41</span></div>
+                    <div class="flex-1 flex flex-col items-center justify-center w-full px-3">
+                        <div class="w-full rounded relative flex items-center justify-end pr-3" style="height:80px;border:2px solid transparent;background:#222">
+                            <div class="absolute inset-0 m-2" style="border:2px solid #4C84FF;border-radius:4px;clip-path:polygon(0 0,22% 0,22% 8%,8% 8%,8% 30%,0 30%,0 100%,0 100%,22% 100%,22% 92%,8% 92%,8% 70%);"></div>
+                            <span class="text-[20px]">👤</span>
+                        </div>
+                        <div class="text-[8px] text-white/90 mt-3 text-center">将身份证人像面放入框内</div>
+                    </div>
+                    <div class="w-full px-2.5 pb-3">
+                        <div class="text-center rounded py-1.5 text-[9px] text-white" style="border:1px solid rgba(255,255,255,.4)">从相册选择</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 识别成功 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">④ 识别成功</div>
+                <div class="w-full rounded-[10px] border border-gray-200 overflow-hidden flex flex-col bg-white" style="height:330px">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹ 激活额度</span><span>9:41</span></div>
+                    <div class="px-2.5 pt-1 text-[10px] font-bold text-gray-900 leading-tight">完成实名认证<br>最高获得 <span style="color:#FF4D6A">20万</span></div>
+                    <div class="px-2.5 mt-3 space-y-2.5">
+                        <div class="rounded lx-blue-soft border lx-blue-border flex items-center justify-center relative" style="height:60px">
+                            <span class="text-[18px]">🪪</span>
+                            <span class="absolute lx-blue text-[6px] font-bold" style="bottom:4px;right:4px">🔒加密</span>
+                        </div>
+                        <div class="rounded lx-blue-soft border lx-blue-border flex items-center justify-center relative" style="height:60px">
+                            <span class="text-[18px]">🪪</span>
+                            <span class="absolute lx-blue text-[6px] font-bold" style="bottom:4px;right:4px">🔒加密</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto px-2.5 pb-3">
+                        <div class="text-[7px] text-gray-400 mb-1.5">☑ 信息无误，确认提交</div>
+                        <div class="lx-blue-bg text-white text-center rounded py-1.5 text-[9px] font-bold">下一步</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 刷脸 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">⑤ 刷脸引导</div>
+                <div class="w-full rounded-[10px] border border-gray-200 overflow-hidden flex flex-col" style="height:330px;background:linear-gradient(#EBF1FF,#fff)">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹ 激活额度</span><span>9:41</span></div>
+                    <div class="px-2.5 pt-1 text-[10px] font-bold text-gray-900 leading-tight">完成实名认证<br>最高获得 <span style="color:#FF4D6A">20万</span></div>
+                    <div class="flex-1 flex items-center justify-center">
+                        <div class="bg-white rounded-lg border border-gray-100 flex flex-col items-center justify-center" style="width:70px;height:70px">
+                            <span class="text-[26px] lx-blue">😊</span>
+                            <span class="text-[7px] text-gray-500 mt-1">人脸识别</span>
+                        </div>
+                    </div>
+                    <div class="px-2.5 pb-3">
+                        <div class="text-center text-[7px] text-white rounded mb-1.5 py-0.5" style="background:#FF4D6A">平均多得 1万额度</div>
+                        <div class="lx-blue-bg text-white text-center rounded py-1.5 text-[9px] font-bold">开始刷脸</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 刷脸中 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">⑥ 刷脸中</div>
+                <div class="w-full rounded-[10px] overflow-hidden flex flex-col items-center" style="height:330px;background:#1A1A1A">
+                    <div class="w-full px-2 pt-2 pb-1 text-[8px] text-white/70 flex justify-between"><span>‹</span><span>9:41</span></div>
+                    <div class="flex-1 flex flex-col items-center justify-center">
+                        <div class="rounded-full flex items-center justify-center" style="width:76px;height:76px;border:3px solid #4C84FF;border-right-color:rgba(255,255,255,.35);border-bottom-color:rgba(255,255,255,.35)">
+                            <span class="text-[30px]">🙂</span>
+                        </div>
+                        <div class="text-[8px] text-white/90 mt-3 text-center px-2">请将正脸置于取景框内</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 审批中 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold text-gray-700 mb-2">⑦ 审批中</div>
+                <div class="w-full rounded-[10px] border border-gray-200 overflow-hidden flex flex-col" style="height:330px;background:linear-gradient(135deg,#EBF1FF,#fff)">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹ 激活额度</span><span>9:41</span></div>
+                    <div class="flex flex-col items-center mt-3">
+                        <div class="rounded-full flex items-center justify-center" style="width:54px;height:54px;border:3px solid #4C84FF;border-right-color:#E5E7EB;border-top-color:#E5E7EB">
+                            <span class="text-[14px] font-extrabold text-gray-900">15s</span>
+                        </div>
+                        <div class="text-[8px] text-gray-700 mt-2.5 text-center px-2">正在为您申请额度<br>请不要走开</div>
+                        <div class="text-[7px] lx-blue mt-1.5">✓ 信息已加密保护</div>
+                    </div>
+                    <div class="mt-auto px-2.5 pb-3">
+                        <div class="rounded-lg overflow-hidden flex text-[7px]" style="height:46px">
+                            <div class="flex-1 lx-blue-soft p-1.5 flex flex-col justify-center"><span class="text-gray-500">乐花卡额度</span><span class="font-bold text-gray-900 text-[9px]">20万元</span></div>
+                            <div class="flex-1 lx-blue-bg text-white p-1.5 flex flex-col justify-center"><span class="text-blue-50">免息金</span><span class="font-bold text-[9px]">1万元</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 授信成功 -->
+            <div class="flex-1 flex flex-col items-center">
+                <div class="text-[11px] font-bold lx-blue mb-2">⑧ 授信成功</div>
+                <div class="w-full rounded-[10px] border-2 lx-blue-border overflow-hidden flex flex-col bg-white" style="height:330px;box-shadow:0 0 12px rgba(76,132,255,.15)">
+                    <div class="px-2 pt-2 pb-1 text-[8px] text-gray-400 flex justify-between"><span>‹</span><span>9:41</span></div>
+                    <div class="flex flex-col items-center mt-4 px-2">
+                        <span class="lx-blue text-[20px]">✓</span>
+                        <div class="text-[9px] text-gray-700 mt-1">恭喜你获得借款额度</div>
+                        <div class="text-[22px] font-extrabold text-gray-900 mt-1">¥20,000</div>
+                        <div class="text-[7px] text-gray-400 mt-0.5">另送购物额度 ¥10,000</div>
+                    </div>
+                    <div class="px-2.5 mt-3">
+                        <div class="bg-gray-50 rounded border border-gray-100 px-1.5 py-1 text-[7px] text-gray-500 mb-1.5">补充资料 提升借款成功率</div>
+                    </div>
+                    <div class="mt-auto px-2.5 pb-3">
+                        <div class="text-center text-[7px] text-white rounded mb-1.5 py-0.5" style="background:#FF4D6A">新人福利 · 30天免息</div>
+                        <div class="lx-blue-bg text-white text-center rounded py-1.5 text-[9px] font-bold">去借钱</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="bg-gray-900 text-gray-300 py-3 px-12 text-sm flex justify-between items-center">
+            <span class="text-gray-500">分期乐设计研发效能 · 内部资料</span>
+            <span class="font-medium">8 个页面、顺序、分支规则全部来自知识库，AI 不再凭空发挥</span>
+        </footer>
+    </div>
+
 </body>
 </html>
